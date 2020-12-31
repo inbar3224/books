@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" stylesheets="@../messages/MessagesStyle.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="messages.AlertBox">
+   <children>
+      <Label fx:id="noResults" contentDisplay="CENTER" layoutX="76.0" layoutY="70.0" text="The wanted content wasn't found. Search again" textAlignment="CENTER" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" stylesheets="@../messages/MessagesStyle.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="homeScreen.HomeScreen">
+   <children>
+      <Label text="Home Screen" />
+      <Button fx:id="addContent" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#search" text="Add Content" textAlignment="CENTER" />
+      <Button fx:id="myLibrary" mnemonicParsing="false" text="My Library" />
+      <Button fx:id="calendar" mnemonicParsing="false" text="Calendar" />
+      <Button fx:id="myChallenge" mnemonicParsing="false" text="My Challenge" />
+      <Button fx:id="instructions" mnemonicParsing="false" text="Instructions" />
+   </children>
+</VBox>
