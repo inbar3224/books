@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class AlertBox {
 	
-	static Stage alertStage;
+	private static Stage alertStage;
 				
 	public static void displayM(String fxmlFile) {
 		try {

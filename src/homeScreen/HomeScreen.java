@@ -7,11 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class HomeScreen {
 	
-	static Stage homeStage;
+	public static Stage homeStage;
 	@FXML
 	private Button addContent;
 	@FXML
@@ -25,7 +26,7 @@ public class HomeScreen {
 	
 	@FXML
 	private void search(ActionEvent e) {
-		AddContent.chooseSearchMethod(homeStage);
+		AddContent.chooseSearchMethod();
 	}
 	
 	@FXML
@@ -56,7 +57,8 @@ public class HomeScreen {
 					
 			homeStage = new Stage();
 			homeStage.setScene(scene);
-			homeStage.setTitle("DreamReading");				
+			homeStage.setTitle("DreamReading");	
+			homeStage.initModality(Modality.APPLICATION_MODAL);
 			homeStage.show();			
 		}
 		catch (Exception e) {

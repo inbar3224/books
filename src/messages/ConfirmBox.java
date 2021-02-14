@@ -12,10 +12,10 @@ import javafx.stage.Stage;
 
 public class ConfirmBox {
 	
-	static boolean answer;
-	static Stage confirmStage;
-	@FXML
-	private static Label confirmMessage;
+	private static boolean answer;
+	private static Stage confirmStage;
+	// @FXML
+	// private static Label confirmMessage;
 	@FXML
 	private Button yes;
 	@FXML
@@ -52,7 +52,6 @@ public class ConfirmBox {
 		catch (Exception e) {
 			e.printStackTrace();
 		}		
-		
 		return answer;
 	}	
 }

@@ -11,12 +11,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AddContent {
 	
-	static Stage searchStage;
-	String input;
+	public static Stage searchStage;
+	private String input;
 	@FXML
 	private Label searchTitle;
 	@FXML
@@ -46,7 +47,7 @@ public class AddContent {
 		searchStage.close();
 	}
 	
-	public static void chooseSearchMethod(Stage caller) {
+	public static void chooseSearchMethod() {
 		try {
 			Parent root = (Parent) FXMLLoader.load(AddContent.class.getClass().getResource("/addContent/AddContent.fxml"));			
 			
@@ -60,9 +61,10 @@ public class AddContent {
 				HomeScreen.presentHome();
 				searchStage.close();
 			});
+			searchStage.initModality(Modality.APPLICATION_MODAL);
 			searchStage.show();
 			
-			caller.close();
+			HomeScreen.homeStage.close();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();

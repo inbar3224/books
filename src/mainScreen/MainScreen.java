@@ -17,7 +17,6 @@ import messages.ConfirmBox;
 
 public class MainScreen extends Application { 
 	
-	DBConnection dbConnection;
 	@FXML
 	private Button press;
 	
@@ -26,6 +25,7 @@ public class MainScreen extends Application {
 		Connection start = DBConnection.connect();
 		if(start != null) {
 			HomeScreen.presentHome();
+			// AlertBox.displayM("/messages/NoDatabase.fxml");
 		}
 		else {
 			AlertBox.displayM("/messages/NoDatabase.fxml");

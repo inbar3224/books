@@ -11,11 +11,19 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import messages.AlertBox;
 
 public class HttpRequest {
 	
 	private static HttpURLConnection connection;
+	public static String[][] results; 
 	
 	public static void request(String input, int searchType) {
 		BufferedReader reader;		
@@ -26,6 +34,7 @@ public class HttpRequest {
 		String fullNameAddition = "&search_type=books&search[field]=title";
 		String finalResponse = "";
 		
+		SearchResults.input = input;
 		String searchString = parseInput(input);
 		searchString = beginning + searchString;		
 		if(searchType == 1) {
@@ -59,6 +68,7 @@ public class HttpRequest {
 					finalResponse = "[" + finalResponse + "]";
 				}
 				parseRequest(finalResponse);
+				// showResults();
 			}
 			else {
 				AlertBox.displayM("/messages/NoResults.fxml");
@@ -80,17 +90,22 @@ public class HttpRequest {
 		String[] tempString = input.split(" ");
 		String newString = "";
 		int i;
+		
 		for(i = 0; i < tempString.length - 1; i++) {
 			newString += tempString[i] + "+";
 		}
 		newString += tempString[i];
-		System.out.println(newString);
+		
 		return newString;
 	}
 	
 	public static void parseRequest(String responseBody) {
 		String tempTitle = "", title = "", series = "", index = "", author = "";
-		JSONArray listOfBooks = new JSONArray(responseBody); 
+		
+		JSONArray listOfBooks = new JSONArray(responseBody);
+		
+		results = new String[listOfBooks.length()][4];
+		
 		for(int i = 0; i < listOfBooks.length(); i++) {
 			JSONObject singleBook = listOfBooks.getJSONObject(i); // a single object
 			JSONObject indexForTitle = singleBook.getJSONObject("best_book");
@@ -106,6 +121,7 @@ public class HttpRequest {
 				index = extraction(series, "\\#", 1);
 				series = extraction(series, "\\,", 0);
 				series = extraction(series, "\\#", 0);
+				series = series.replaceAll(" $","");
 				index = extraction(index, "\\)", 0);
 			}
 			else {
@@ -114,13 +130,53 @@ public class HttpRequest {
 				index = "0";
 			}		
 			author = indexForAuthor.getString("name");
-			
-			System.out.println(title + ", " + series  + ", " + index + ", " + author); // print information
+			results[i][0] = title;
+			results[i][1] = author;
+			results[i][2] = series;
+			results[i][3] = index;
 		}
+		printResults();
 	}
 	
 	public static String extraction(String original, String limit, int index) {
 		String[] split = original.split(limit, 2);
 		return split[index].toString();
+	}
+	
+	public static void printResults() {
+		for(int i = 0; i < results.length; i++) {
+			for(int j = 0; j < 4; j++) {
+				if(results[i][j] != null) {
+					System.out.print(results[i][j] + ", ");
+				}
+			}
+			System.out.println();
+		}		
+	}
+	
+	public static void showResults() {
+		try {
+			FXMLLoader loader = new FXMLLoader(SearchResults.class.getClass().getResource("/addContent/SearchResults.fxml"));
+			SearchResults gg = new SearchResults();
+			loader.setController(gg);
+			Parent root = (Parent) loader.load();
+			
+			// Parent root = (Parent) FXMLLoader.load(SearchResults.class.getClass().getResource("/addContent/SearchResults.fxml"));
+	        
+			// Parent root = (Parent) loader.load();
+			
+			// SearchResults.searchKey.setText("hi");			
+	         
+	        Scene scene = new Scene(root);
+				
+			SearchResults.tableStage = new Stage();
+			SearchResults.tableStage.setScene(scene);
+			SearchResults.tableStage.setTitle("DreamReading");
+			SearchResults.tableStage.initModality(Modality.APPLICATION_MODAL);
+			SearchResults.tableStage.show();
+	    } 
+		catch (Exception e) {
+	         e.printStackTrace();
+	    }
 	}
 }
