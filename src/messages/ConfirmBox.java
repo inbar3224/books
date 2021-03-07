@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -14,8 +13,7 @@ public class ConfirmBox {
 	
 	private static boolean answer;
 	private static Stage confirmStage;
-	// @FXML
-	// private static Label confirmMessage;
+	
 	@FXML
 	private Button yes;
 	@FXML
@@ -33,9 +31,9 @@ public class ConfirmBox {
 		confirmStage.close();
 	}	
 	
-	public static boolean displayM() {
+	public static boolean displayM(String fxmlFile) {
 		try {
-			Parent root = (Parent) FXMLLoader.load(ConfirmBox.class.getClass().getResource("/messages/ConfirmBox.fxml"));			
+			Parent root = (Parent) FXMLLoader.load(ConfirmBox.class.getClass().getResource(fxmlFile));			
 			
 			Scene scene = new Scene(root);					
 			
@@ -46,7 +44,8 @@ public class ConfirmBox {
 				answer = false;
 				confirmStage.close();
 			});		
-			confirmStage.initModality(Modality.APPLICATION_MODAL);		
+			confirmStage.initModality(Modality.APPLICATION_MODAL);
+			confirmStage.setResizable(false);
 			confirmStage.showAndWait();			
 		}
 		catch (Exception e) {

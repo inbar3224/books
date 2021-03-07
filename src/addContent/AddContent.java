@@ -13,11 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mainScreen.MainScreen;
 
 public class AddContent {
 	
 	public static Stage searchStage;
 	private String input;
+	
 	@FXML
 	private Label searchTitle;
 	@FXML
@@ -43,8 +45,8 @@ public class AddContent {
 	
 	@FXML
 	private void goBack(ActionEvent e) {
-		HomeScreen.presentHome();
 		searchStage.close();
+		HomeScreen.presentHome();
 	}
 	
 	public static void chooseSearchMethod() {
@@ -58,16 +60,14 @@ public class AddContent {
 			searchStage.setTitle("DreamReading");
 			searchStage.setOnCloseRequest(e -> {
 				e.consume();
-				HomeScreen.presentHome();
-				searchStage.close();
+				MainScreen.confirmClose(searchStage);
 			});
 			searchStage.initModality(Modality.APPLICATION_MODAL);
+			searchStage.setResizable(false);
 			searchStage.show();
-			
-			HomeScreen.homeStage.close();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
 		}	
-	}
+	}	
 }

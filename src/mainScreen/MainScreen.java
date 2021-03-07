@@ -3,6 +3,7 @@ package mainScreen;
 import java.sql.Connection;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +19,7 @@ import messages.ConfirmBox;
 public class MainScreen extends Application { 
 	
 	@FXML
-	private Button press;
+	private Button pressButton;
 	
 	@FXML
 	private void connectionButton(ActionEvent e) {
@@ -48,7 +49,8 @@ public class MainScreen extends Application {
 			primaryStage.setOnCloseRequest(e -> {
 				e.consume();
 				confirmClose(primaryStage);
-			});			
+			});
+			primaryStage.setResizable(false);
 			primaryStage.show();
 		}
 		catch (Exception e) {
@@ -56,10 +58,10 @@ public class MainScreen extends Application {
 		}	
 	}
 	
-	public void confirmClose(Stage primaryStage) {
-		boolean result = ConfirmBox.displayM();
+	public static void confirmClose(Stage primaryStage) {
+		boolean result = ConfirmBox.displayM("/messages/ConfirmBox.fxml");
 		if(result == true) {
-			primaryStage.close();
+			Platform.exit();
 		}
 	}
 }

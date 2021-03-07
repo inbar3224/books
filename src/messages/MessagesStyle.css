@@ -1,16 +1,17 @@
 .root {
-	-fx-background-color: linear-gradient(to bottom right, #ff0000 0%, #ffff00 70%);
-	-fx-font-weight: bold;
+	-fx-background-color: #F9F7F4;
 	-fx-text-fill: black;  
 }
 
 .label {
-	-fx-font-size: 15pt; 
+	-fx-font-size: 15pt;
+	-fx-font-weight: bold; 
 }
 
 .button {
+	-fx-background-color: #F4F1EA;
 	-fx-font-size: 15pt;
-	-fx-background-radius: 6;
+	-fx-border-radius: 6;
 }
 
 .input {

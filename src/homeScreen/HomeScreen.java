@@ -9,23 +9,28 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mainScreen.MainScreen;
 
 public class HomeScreen {
 	
 	public static Stage homeStage;
+	
 	@FXML
-	private Button addContent;
+	private Button searchBooks;
 	@FXML
-	private Button myLibrary;
+	private Button viewMyLibrary;
 	@FXML
-	private Button calendar;
+	private Button booksCalendar;
 	@FXML
-	private Button myChallenge;
+	private Button myReadingChallenges;
 	@FXML
 	private Button instructions;
+	@FXML
+	private Button goBack;
 	
 	@FXML
 	private void search(ActionEvent e) {
+		homeStage.close();
 		AddContent.chooseSearchMethod();
 	}
 	
@@ -48,6 +53,11 @@ public class HomeScreen {
 	private void instructions(ActionEvent e) {
 		
 	}
+	
+	@FXML
+	private void goBack(ActionEvent e) {
+		homeStage.close();
+	}
 		
 	public static void presentHome() {
 		try {
@@ -59,10 +69,15 @@ public class HomeScreen {
 			homeStage.setScene(scene);
 			homeStage.setTitle("DreamReading");	
 			homeStage.initModality(Modality.APPLICATION_MODAL);
+			homeStage.setOnCloseRequest(e -> {
+				e.consume();
+				MainScreen.confirmClose(homeStage);
+			});
+			homeStage.setResizable(false);
 			homeStage.show();			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}	
 }

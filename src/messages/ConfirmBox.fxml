@@ -6,8 +6,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" stylesheets="@MessagesStyle.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="messages.ConfirmBox">
    <children>
-      <Label fx:id="confirmMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="70.0" text="Are you sure you want to close?" />
-      <Button fx:id="no" layoutX="150.0" layoutY="125.0" mnemonicParsing="false" onAction="#no" text="No" />
-      <Button fx:id="yes" layoutX="390.0" layoutY="125.0" mnemonicParsing="false" onAction="#yes" text="Yes" />
+      <Label layoutX="160.0" layoutY="50.0" text="Are you sure you want to close?" />
+      <Button fx:id="no" layoutX="160.0" layoutY="110.0" onAction="#no" text="No" />
+      <Button fx:id="yes" layoutX="380.0" layoutY="110.0" onAction="#yes" text="Yes" />
    </children>
 </AnchorPane>

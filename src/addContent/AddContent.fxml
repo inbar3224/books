@@ -8,9 +8,9 @@
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" stylesheets="@../messages/MessagesStyle.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="addContent.AddContent">
    <children>
       <Label fx:id="searchTitle" text="Search Book / Series" />
-      <TextField fx:id="searchInput" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="450.0" styleClass="input" />
+      <TextField fx:id="searchInput" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="500.0" styleClass="input" />
       <Button fx:id="fullName" mnemonicParsing="false" onAction="#searchFullName" text="By Full name" />
       <Button fx:id="authorName" mnemonicParsing="false" onAction="#searchAuthorName" text="By Author's last name + part of title" />
-      <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBack" text="Return" />
+      <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBack" text="Go Back" />
    </children>
 </VBox>

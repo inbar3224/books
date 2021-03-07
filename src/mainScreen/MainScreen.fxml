@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@MainScreen.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="mainScreen.MainScreen">
    <children>
-      <Label fx:id="welcome" alignment="CENTER" layoutX="92.0" layoutY="105.0" styleClass="welcome" text="Welcome to DreamReading" />
-      <Button fx:id="press" alignment="CENTER" layoutX="196.0" layoutY="200.0" mnemonicParsing="false" onAction="#connectionButton" text="Press here to begin" />
+      <Label layoutX="97.0" layoutY="102.0" text="Welcome to DreamReading" />
+      <Button fx:id="pressButton" layoutX="201.0" layoutY="206.0" onAction="#connectionButton" text="Press here to begin" />
    </children>
 </AnchorPane>

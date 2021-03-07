@@ -19,7 +19,8 @@ public class AlertBox {
 			alertStage = new Stage();
 			alertStage.setScene(scene);
 			alertStage.setTitle("DreamReading");			
-			alertStage.initModality(Modality.APPLICATION_MODAL);		
+			alertStage.initModality(Modality.APPLICATION_MODAL);
+			alertStage.setResizable(false);
 			alertStage.showAndWait();
 		}
 		catch (Exception e) {
