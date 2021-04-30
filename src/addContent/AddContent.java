@@ -2,7 +2,6 @@ package addContent;
 
 import java.io.IOException;
 
-import homeScreen.HomeScreen;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,11 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import homeScreen.HomeScreen;
 import mainScreen.MainScreen;
 
 public class AddContent {
 	
-	public static Stage searchStage;
+	public static Stage searchStage;	
 	private String input;
 	
 	@FXML
@@ -31,24 +32,29 @@ public class AddContent {
 	@FXML
 	private Button goBack;
 	
+	// search by full name
 	@FXML
 	private void searchFullName(ActionEvent e) {
 		input = searchInput.getText();
 		HttpRequest.request(input, 1);
 	}
 	
+	// search by author's name + partial name of the book
 	@FXML
 	private void searchAuthorName(ActionEvent e) {
 		input = searchInput.getText();
 		HttpRequest.request(input, 2);
 	}
 	
+	// returns to home screen
 	@FXML
 	private void goBack(ActionEvent e) {
 		searchStage.close();
 		HomeScreen.presentHome();
 	}
 	
+	// show search screen - 
+	// there is a place for us to type whatever it is we want to search, and buttons to differentiate each search
 	public static void chooseSearchMethod() {
 		try {
 			Parent root = (Parent) FXMLLoader.load(AddContent.class.getClass().getResource("/addContent/AddContent.fxml"));			

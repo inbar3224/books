@@ -1,6 +1,5 @@
 package homeScreen;
 
-import addContent.AddContent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,12 +8,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import addContent.AddContent;
 import mainScreen.MainScreen;
 
 public class HomeScreen {
 	
 	public static Stage homeStage;
-	
+	public static int responseStatus = 0;
+	public static Initiater initiater;
+	public static Responder responder;
+		
 	@FXML
 	private Button searchBooks;
 	@FXML
@@ -28,10 +32,17 @@ public class HomeScreen {
 	@FXML
 	private Button goBack;
 	
+	// creates a listener and then sends us to choose a search method
+	// once the search is complete, the listener would get the result and show us the appropriate response 
 	@FXML
 	private void search(ActionEvent e) {
 		homeStage.close();
-		AddContent.chooseSearchMethod();
+		
+		initiater = new Initiater();
+        responder = new Responder();
+        initiater.addListener(responder);
+		
+		AddContent.chooseSearchMethod();       
 	}
 	
 	@FXML
@@ -54,11 +65,13 @@ public class HomeScreen {
 		
 	}
 	
+	// returns to main screen
 	@FXML
 	private void goBack(ActionEvent e) {
 		homeStage.close();
 	}
-		
+	
+	// show the home screen stage
 	public static void presentHome() {
 		try {
 			Parent root = (Parent) FXMLLoader.load(HomeScreen.class.getClass().getResource("/homeScreen/HomeScreen.fxml"));

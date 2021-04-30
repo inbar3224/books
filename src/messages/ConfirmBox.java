@@ -19,18 +19,22 @@ public class ConfirmBox {
 	@FXML
 	private Button no;
 	
+	// confirm
 	@FXML
 	private void yes(ActionEvent e) {
 		answer = true;
 		confirmStage.close();
 	}
 	
+	// refuse confirmation	
 	@FXML
 	private void no(ActionEvent e) {
 		answer = false;
 		confirmStage.close();
 	}	
 	
+	// show a yes / no question according to the given fxml file - specific message for each question
+	// also, return the answer to the caller
 	public static boolean displayM(String fxmlFile) {
 		try {
 			Parent root = (Parent) FXMLLoader.load(ConfirmBox.class.getClass().getResource(fxmlFile));			

@@ -5,11 +5,15 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class SearchResults implements Initializable {
@@ -37,6 +41,32 @@ public class SearchResults implements Initializable {
 		tableStage.close();
 	}
 
+	public static void showResults() {
+		try {
+			FXMLLoader loader = new FXMLLoader(SearchResults.class.getClass().getResource("/addContent/SearchResults.fxml"));
+			SearchResults gg = new SearchResults();
+			loader.setController(gg);
+			Parent root = (Parent) loader.load();
+			
+			// Parent root = (Parent) FXMLLoader.load(SearchResults.class.getClass().getResource("/addContent/SearchResults.fxml"));
+	        
+			// Parent root = (Parent) loader.load();
+			
+			// SearchResults.searchKey.setText("hi");			
+	         
+	        Scene scene = new Scene(root);
+				
+			SearchResults.tableStage = new Stage();
+			SearchResults.tableStage.setScene(scene);
+			SearchResults.tableStage.setTitle("DreamReading");
+			SearchResults.tableStage.initModality(Modality.APPLICATION_MODAL);
+			SearchResults.tableStage.show();
+	    } 
+		catch (Exception e) {
+	         e.printStackTrace();
+	    }
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("hiiiiiiiiiiiiiiii");
