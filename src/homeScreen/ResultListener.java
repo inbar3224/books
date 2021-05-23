@@ -2,7 +2,7 @@ package homeScreen;
 
 public interface ResultListener {
 	
-	// the abstract method
+	// The abstract method
 	void response(int result);
 }
 

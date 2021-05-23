@@ -4,8 +4,18 @@
 }
 
 .label {
+	-fx-font-size: 15pt;
+	-fx-font-weight: bold; 
+}
+
+.label.title {
 	-fx-font-size: 25pt;
 	-fx-font-weight: bold;
+}
+
+.textArea {
+	-fx-font-size: 15pt;
+	-fx-font-weight: normal;
 }
 
 .button {
@@ -14,3 +24,8 @@
 	-fx-border-radius: 6;
 }
 
+.input {
+	-fx-font-size: 15pt;
+	-fx-font-weight: normal;
+	-fx-background-radius: 6;
+}

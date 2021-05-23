@@ -3,9 +3,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" stylesheets="@MessagesStyle.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="messages.AlertBox">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" stylesheets="@../mainScreen/design.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="messages.AlertBox">
    <children>
-      <Label layoutX="165.0" layoutY="50.0" stylesheets="@MessagesStyle.css" text="Connection to database failed." />
-      <Label layoutX="40.0" layoutY="120.0" stylesheets="@MessagesStyle.css" text="Please install SQLiteStudio on your computer and try again." />
+      <Label layoutX="158.0" layoutY="50.0" text="Connection to database failed." />
+      <Label layoutX="20.0" layoutY="120.0" text="Please install SQLiteStudio on your computer and try again." />
    </children>
 </AnchorPane>

@@ -3,6 +3,7 @@ package messages;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,36 +13,35 @@ import javafx.stage.Stage;
 public class ConfirmBox {
 	
 	private static boolean answer;
-	private static Stage confirmStage;
+		
+	@FXML private Button yes;
+	@FXML private Button no;
 	
-	@FXML
-	private Button yes;
-	@FXML
-	private Button no;
 	
-	// confirm
+	// Confirm or deny
 	@FXML
-	private void yes(ActionEvent e) {
-		answer = true;
-		confirmStage.close();
+	private void getAnAnswer(ActionEvent event) {
+		if(event.getSource() == yes) {
+			answer = true;
+		}
+		else {
+			answer = false;
+		}
+		Stage confirmScreenWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
+		confirmScreenWindow.close();
 	}
 	
-	// refuse confirmation	
-	@FXML
-	private void no(ActionEvent e) {
-		answer = false;
-		confirmStage.close();
-	}	
-	
-	// show a yes / no question according to the given fxml file - specific message for each question
-	// also, return the answer to the caller
+	/* Show a yes / no question according to given fxml file - specific message for each question 
+	 * Also, return the answer to the caller
+	 */
 	public static boolean displayM(String fxmlFile) {
 		try {
+			// Settings for stage
 			Parent root = (Parent) FXMLLoader.load(ConfirmBox.class.getClass().getResource(fxmlFile));			
 			
-			Scene scene = new Scene(root);					
+			Scene scene = new Scene(root);	
 			
-			confirmStage = new Stage();
+			Stage confirmStage = new Stage();			
 			confirmStage.setScene(scene);
 			confirmStage.setTitle("DreamReading");			
 			confirmStage.setOnCloseRequest(e -> {
@@ -50,6 +50,7 @@ public class ConfirmBox {
 			});		
 			confirmStage.initModality(Modality.APPLICATION_MODAL);
 			confirmStage.setResizable(false);
+			// Showing stage
 			confirmStage.showAndWait();			
 		}
 		catch (Exception e) {

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	
-	// creates a connection between the app and the SQLite database
+	// Creates a connection between the application and the SQLite database
 	public static Connection connect() {
 		Connection connection = null;
 		try {

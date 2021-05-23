@@ -10,8 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 
-import homeScreen.HomeScreen;
-
 public class HttpRequest {
 	
 	private static HttpURLConnection connection;
@@ -53,20 +51,20 @@ public class HttpRequest {
 			if(results) {
 				resultAnalysis(responseContent.toString());				
 				parseRequest(finalResponse);
-				HomeScreen.responseStatus = 2;
+				SearchScreenController.Status = 2;
 			}
 			else {
-				HomeScreen.responseStatus = 1;				
+				SearchScreenController.Status = 1;				
 			}			
 		}
 		catch(IOException e) {
-			// add no internet = 0, alert box for it, responsder condition
-			e.printStackTrace();
+			SearchScreenController.Status = 0;
+			// e.printStackTrace();
 		}
 				
 		finally {
 			connection.disconnect();
-			HomeScreen.initiater.getAResponse(HomeScreen.responseStatus);
+			// HomeScreen.initiater.getAResponse(HomeScreen.responseStatus);
 		}
 	}
 	
