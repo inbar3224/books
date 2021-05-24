@@ -16,8 +16,6 @@ import mainScreen.DreamReading;
 
 public class HomeScreenController implements Initializable {
 	
-	public static int results;
-		
 	@FXML private Button searchBooks;
 	@FXML private Button viewMyLibrary;
 	@FXML private Button booksCalendar;
@@ -25,9 +23,6 @@ public class HomeScreenController implements Initializable {
 	@FXML private Button goBack;
 	@FXML private TextArea preview;
 	
-	/* Creates a listener and then sends us to choose a search method
-	 * Once the search is complete, the listener would get the result and show us the appropriate response 
-	 */
 	@FXML
 	private void search(ActionEvent event) {
 		try {
@@ -41,13 +36,7 @@ public class HomeScreenController implements Initializable {
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
-		}
-		
-		// Listener awaits results from search
-		InitiateContainer initiateContainer = new InitiateContainer();
-		Responder responder = new Responder();
-		initiateContainer.addListener(responder);
-		// initiateContainer.getAResponse(results);		  
+		}			  
 	}
 	
 	@FXML

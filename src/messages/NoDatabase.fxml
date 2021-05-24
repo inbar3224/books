@@ -5,7 +5,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" stylesheets="@../mainScreen/design.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="messages.AlertBox">
    <children>
-      <Label layoutX="158.0" layoutY="50.0" text="Connection to database failed." />
+      <Label layoutX="157.0" layoutY="50.0" text="Connection to database failed." />
       <Label layoutX="20.0" layoutY="120.0" text="Please install SQLiteStudio on your computer and try again." />
    </children>
 </AnchorPane>

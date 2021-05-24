@@ -3,7 +3,6 @@ package addContent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import homeScreen.HomeScreenController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,12 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mainScreen.DreamReading;
-import messages.AlertBox;
 
 public class SearchScreenController implements Initializable {
-	
-	// Temporarily
-	public static int Status = 0;
 	
 	@FXML private TextField searchInput;
 	@FXML private Button byFullName;
@@ -28,28 +23,27 @@ public class SearchScreenController implements Initializable {
 	
 	@FXML
 	private void chooseSearchMethod(ActionEvent event) {
+		HttpRequest httpRequest = new HttpRequest();
+		int status;
+		
+		// Values we need for the search
 		String input = searchInput.getText();
+				
+		// Listener awaits results from search
+		InitiateContainer initiateContainer = new InitiateContainer();
+		Responder responder = new Responder();
+		initiateContainer.addListener(responder);
+				
+		// Passing values to HTTP request according to the button we selected 
 		if(event.getSource() == byFullName) {
-			HttpRequest.request(input, 1);
-			HomeScreenController.results = 1;
+			status = httpRequest.request(input, 1);
 		}
 		else {
-			HttpRequest.request(input, 2);
-			HomeScreenController.results = 2;
+			status = httpRequest.request(input, 2);
 		}
 		
-		// No Internet
-		if(Status == 0) {
-			AlertBox.displayM("/messages/NoInternet.fxml");
-		}
-		// No results
-		else if(Status == 1) {
-			AlertBox.displayM("/messages/NoResults.fxml");
-		}
-		// results
-		else if(Status == 2) {
-			
-		}
+		// Get a response
+		initiateContainer.getAResponse(status);		
 	}
 	
 	// Returns to home screen
