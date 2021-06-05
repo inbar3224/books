@@ -16,8 +16,7 @@ public class ConfirmBox {
 		
 	@FXML private Button yes;
 	@FXML private Button no;
-	
-	
+		
 	// Confirm or deny
 	@FXML
 	private void getAnAnswer(ActionEvent event) {

@@ -14,7 +14,12 @@ public class HttpRequest {
 	
 	private HttpURLConnection connection;
 	private String finalResponse = "";
+	private SearchOutcomeListener listener;
 	public static String[][] results;
+	
+	public void setSearchOutcomeListener(SearchOutcomeListener listener) {
+		this.listener = listener;
+	}
 	
 	/* Parse input
 	 * Create a connection according to a specific url
@@ -23,7 +28,7 @@ public class HttpRequest {
 	 * If we do, we call a method to separate each book and it's details to it's own place in the array
 	 * We also have a listener from the SearchScreen who gets a request status after we're done working
 	 */
-	public int request(String input, int searchType) {
+	public void request(String input, int searchType) {
 		int requestStatus = 0;
 		BufferedReader reader;		
 		StringBuffer responseContent = new StringBuffer();
@@ -75,7 +80,11 @@ public class HttpRequest {
 			connection.disconnect();			
 		}
 		
-		return requestStatus;
+		if(listener != null) {
+			listener.onEvent(requestStatus, results);
+		}
+		
+		// return requestStatus;
 	}
 	
 	/* Oftentimes, the search would contain more than one word.
@@ -158,7 +167,7 @@ public class HttpRequest {
 			results[i][3] = index;
 			results[i][4] = publicationDate;
 		}
-		printResults();
+		// printResults();
 	}
 	
 	// Get book's name
@@ -291,7 +300,7 @@ public class HttpRequest {
 		return split[index].toString();
 	}
 	
-	// Only for now
+	/*// Only for now
 	public void printResults() {
 		for(int i = 0; i < results.length; i++) {
 			for(int j = 0; j < 5; j++) {
@@ -301,5 +310,5 @@ public class HttpRequest {
 			}
 			System.out.println();
 		}		
-	}
+	}*/
 }

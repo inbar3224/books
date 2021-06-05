@@ -34,8 +34,7 @@ public class DreamReading extends Application {
 	}
 	
 	/* So we'll be able to get the stage from anywhere in the application
-	 * In order to change screens  
-	 */
+	 * In order to change screens */
 	public static Stage getPrimaryStage() {
         return realStage;
     }

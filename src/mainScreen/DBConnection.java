@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBConnection {
 	
 	// Creates a connection between the application and the SQLite database
-	public static Connection connect() {
+	public Connection connect() {
 		Connection connection = null;
 		try {
 			Class.forName("org.sqlite.JDBC");

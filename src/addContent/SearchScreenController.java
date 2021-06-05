@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mainScreen.DreamReading;
+import messages.AlertBox;
 
 public class SearchScreenController implements Initializable {
 	
@@ -21,29 +22,56 @@ public class SearchScreenController implements Initializable {
 	@FXML private Button byAuthorName;
 	@FXML private Button goBack;
 	
+	/* Gets input from user
+	 * Send an HTTP request according to selected search method
+	 * Once a search outcome has been dispatched from the HTTPRequest instance,
+	 * The listener performs a proper response */
 	@FXML
 	private void chooseSearchMethod(ActionEvent event) {
-		HttpRequest httpRequest = new HttpRequest();
-		int status;
-		
-		// Values we need for the search
 		String input = searchInput.getText();
-				
-		// Listener awaits results from search
-		InitiateContainer initiateContainer = new InitiateContainer();
-		Responder responder = new Responder();
-		initiateContainer.addListener(responder);
-				
-		// Passing values to HTTP request according to the button we selected 
+		
+		HttpRequest httpRequest = new HttpRequest();
+		SearchOutcomeListener listener = new SearchOutcomeListener() {			
+			@Override
+			public void onEvent(int status, String[][] resultsArray) {
+				// No Internet
+				if(status == 0) {
+					AlertBox.displayM("/messages/NoInternet.fxml");
+				}
+				// No results
+				else if(status == 1) {
+					AlertBox.displayM("/messages/NoResults.fxml");
+				}
+				// results
+				else if(status == 2) {
+					try {
+						Stage resultsScreenWindow = DreamReading.getPrimaryStage();	
+						
+						// Settings for stage
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/addContent/ResultsScreen.fxml"));						
+						ResultsScreenController controller = new ResultsScreenController(input, resultsArray);
+						loader.setController(controller);						
+						Parent resultsScreenParent = loader.load();						
+						Scene resultsScreenScene = new Scene(resultsScreenParent);
+						resultsScreenWindow.setScene(resultsScreenScene);
+						// Showing stage
+						resultsScreenWindow.show();							
+					}
+					catch (Exception exception) {
+						exception.printStackTrace();
+					}		
+				}		
+			}
+		};	
+		
+		httpRequest.setSearchOutcomeListener(listener);
+		
 		if(event.getSource() == byFullName) {
-			status = httpRequest.request(input, 1);
+			httpRequest.request(input, 1);
 		}
 		else {
-			status = httpRequest.request(input, 2);
-		}
-		
-		// Get a response
-		initiateContainer.getAResponse(status);		
+			httpRequest.request(input, 2);
+		}		
 	}
 	
 	// Returns to home screen

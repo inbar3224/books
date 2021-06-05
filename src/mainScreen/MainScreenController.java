@@ -21,11 +21,11 @@ public class MainScreenController implements Initializable {
 	@FXML private Button pressButton;
 	
 	/* We have to be connected to the database in order to use the application properly. 
-	 * Otherwise, there is a "fail" message
-	 */
+	 * Otherwise, there is a "fail" message */
 	@FXML 
 	private void connectionButton(ActionEvent event) {
-		Connection start = DBConnection.connect();
+		DBConnection temp = new DBConnection();
+		Connection start = temp.connect();
 		if(start != null) {
 			try {
 				Stage homeScreenWindow = DreamReading.getPrimaryStage();	
