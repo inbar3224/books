@@ -19,7 +19,7 @@ public class ConstantStrings {
 		"Otherwise, you'll be transfered to the Results\nscreen, where you'll be able to add the selected\n" +
 		"items to a database based library\n" + 
 		"PS: in the case of untitled books, know that\n" +
-		"they're simply future installments in a book\nseries";
+		"they're simply future installments in an\nunfinished series";
 	
 	public static final String libraryInstructions = "";
 	public static final String calendarInstructions = "";

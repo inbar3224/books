@@ -18,7 +18,7 @@ public class HomeScreenController implements Initializable {
 	
 	@FXML private Button searchBooks;
 	@FXML private Button viewMyLibrary;
-	@FXML private Button booksCalendar;
+	@FXML private Button calendar;
 	@FXML private Button myReadingChallenges;
 	@FXML private Button goBack;
 	@FXML private TextArea preview;

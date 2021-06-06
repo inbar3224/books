@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="800.0" stylesheets="@../mainScreen/design.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
    <children>
-      <Label layoutX="400.0" layoutY="253.0" text="hiii" />
-      <Button fx:id="b" layoutX="378.0" layoutY="332.0" mnemonicParsing="false" onAction="#p" text="Button" />
+      <Label layoutX="340.0" layoutY="52.0" styleClass="title" text="Results for:" />
+      <TextField fx:id="keyWord" alignment="CENTER" layoutX="50.0" layoutY="120.0" prefHeight="44.0" prefWidth="700.0" styleClass="textArea" text=" " />
+      <TableView fx:id="tableView" layoutX="50.0" layoutY="164.0" prefHeight="400.0" prefWidth="700.0">
+        <columns>
+          <TableColumn fx:id="name" prefWidth="210.0" text="Name" />
+          <TableColumn fx:id="author" prefWidth="210.0" text="Author" />
+          <TableColumn fx:id="seriesStandAlone" prefWidth="210.0" text="Series or Stand-alone" />
+          <TableColumn fx:id="index" minWidth="0.0" prefWidth="65.0" text="Index" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" layoutX="50.0" layoutY="564.0" prefHeight="44.0" prefWidth="650.0" spacing="137.0">
+         <children>
+            <Button fx:id="addSeries" mnemonicParsing="false" text="Add Series" />
+            <Button fx:id="addBook" mnemonicParsing="false" text="Add Book">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <Button fx:id="goBack" layoutX="699.0" layoutY="601.0" mnemonicParsing="false" text="Go back" />
    </children>
 </AnchorPane>

@@ -4,16 +4,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="800.0" stylesheets="@design.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="mainScreen.MainScreenController">
    <children>
       <Label layoutX="185.0" layoutY="150.0" styleClass="title" text="Welcome to DreamReading" />
+      <TextArea fx:id="preview" layoutX="180.0" layoutY="257.0" prefHeight="135.0" prefWidth="440.0" styleClass="textArea" text="This app helps you research books,&#10;manage your own library, &#10;getting notified about future publication dates&#10;and having your own reading challenges list." />
       <Button fx:id="pressButton" layoutX="301.0" layoutY="451.0" onAction="#connectionButton" text="Press here to begin" />
-      <TextArea layoutX="180.0" layoutY="257.0" prefHeight="135.0" prefWidth="440.0" styleClass="textArea" text="This app helps you research books,&#10;manage your own library, &#10;getting notified about future publication dates&#10;and having your own reading challenges list.">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </TextArea>
    </children>
 </AnchorPane>

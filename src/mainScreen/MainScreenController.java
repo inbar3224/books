@@ -12,12 +12,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import messages.AlertBox;
 import messages.ConfirmBox;
 
 public class MainScreenController implements Initializable {
 	
+	@FXML private TextArea preview;
 	@FXML private Button pressButton;
 	
 	/* We have to be connected to the database in order to use the application properly. 
@@ -51,6 +53,8 @@ public class MainScreenController implements Initializable {
 		Stage window = DreamReading.getPrimaryStage();
 		
 		window.setTitle("DreamReading");
+		preview.getStyleClass().add("textArea");
+		preview.setEditable(false);
 		// Before the stage closes, we have to wait and confirm the closing request
 		window.setOnCloseRequest(e -> {
 			e.consume();
