@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class AlertBox {
 	
 	// Show alert message according to given fxml file - specific message for each problem
-	public static void displayM(String fxmlFile) {
+	public void displayM(String fxmlFile) {
 		try {
 			// Settings for stage
 			Parent root = (Parent) FXMLLoader.load(AlertBox.class.getClass().getResource(fxmlFile));			

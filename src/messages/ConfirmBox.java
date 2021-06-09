@@ -31,9 +31,8 @@ public class ConfirmBox {
 	}
 	
 	/* Show a yes / no question according to given fxml file - specific message for each question 
-	 * Also, return the answer to the caller
-	 */
-	public static boolean displayM(String fxmlFile) {
+	 * Also, return the answer to the caller */
+	public boolean displayM(String fxmlFile) {
 		try {
 			// Settings for stage
 			Parent root = (Parent) FXMLLoader.load(ConfirmBox.class.getClass().getResource(fxmlFile));			

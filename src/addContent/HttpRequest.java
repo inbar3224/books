@@ -10,13 +10,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class HttpRequest {
 	
 	private HttpURLConnection connection;
 	private String finalResponse = "";
 	private SearchOutcomeListener listener;
-	public static String[][] results;
+	private ObservableList<Book> results;
 	
+	// Set listener	
 	public void setSearchOutcomeListener(SearchOutcomeListener listener) {
 		this.listener = listener;
 	}
@@ -26,8 +30,7 @@ public class HttpRequest {
 	 * Call method to convert response to JSON
 	 * We check if we have even have results or not
 	 * If we do, we call a method to separate each book and it's details to it's own place in the array
-	 * We also have a listener from the SearchScreen who gets a request status after we're done working
-	 */
+	 * We also have a listener from the SearchScreen who gets a request status after we're done working */
 	public void request(String input, int searchType) {
 		int requestStatus = 0;
 		BufferedReader reader;		
@@ -78,18 +81,14 @@ public class HttpRequest {
 		// We have to close the request
 		finally {
 			connection.disconnect();			
-		}
-		
+		}		
 		if(listener != null) {
 			listener.onEvent(requestStatus, results);
 		}
-		
-		// return requestStatus;
 	}
 	
 	/* Oftentimes, the search would contain more than one word.
-	 * We have to parse it in a way that would fit the HTTP request
-	 */
+	 * We have to parse it in a way that would fit the HTTP request */
 	public String parseInput(String input) {
 		String[] tempString = input.split(" ");
 		String newString = "";
@@ -106,8 +105,7 @@ public class HttpRequest {
 	/* Do we only have one book as a result or more?
 	 * One book has a different XML file than 2 or more books
 	 * In order for the resultsAnalysis method to have one set of tools regardless of the amount,
-	 * We design the finalRequest string according to the number of books
-	 */
+	 * We design the finalRequest string according to the number of books */
 	public void xmlToJson(String response) {
 		JSONObject object = XML.toJSONObject(response);
 		
@@ -129,8 +127,7 @@ public class HttpRequest {
 	
 	/* Separate each book from the initial response
 	 * Getting specific details: name, author's name, series / stand-alone, index, release date
-	 * We arrange each book and it's details in an array to be presented later in the results screen
-	 */
+	 * We arrange each book and it's details in an array to be presented later in the results screen */
 	public void resultsAnalysis(String responseBody) {
 		String title = "";
 		String author = "";
@@ -139,7 +136,7 @@ public class HttpRequest {
 						
 		JSONArray listOfBooks = new JSONArray(responseBody);
 		
-		results = new String[listOfBooks.length()][5];
+		results = FXCollections.observableArrayList();
 				
 		for(int i = 0; i < listOfBooks.length(); i++) {
 			JSONObject singleBook = listOfBooks.getJSONObject(i); // a single object
@@ -159,21 +156,16 @@ public class HttpRequest {
 				index = getIndex(bestBook);
 			}			
 			// Full publication date
-			publicationDate = getDate(singleBook);		
-					
-			results[i][0] = title;
-			results[i][1] = author;
-			results[i][2] = series;
-			results[i][3] = index;
-			results[i][4] = publicationDate;
-		}
-		// printResults();
+			publicationDate = getDate(singleBook);
+			
+			Book option = new Book(title, author, series, index, publicationDate);
+			results.add(option);
+		}		
 	}
 	
 	// Get book's name
 	public String getName(JSONObject partialData) {
-		String title = "";
-	
+		String title = "";	
 		String tempTitle = partialData.getString("title");
 		
 		int isSeries = tempTitle.indexOf("(");
@@ -203,7 +195,6 @@ public class HttpRequest {
 	// Get series / stand-alone
 	public String getSeries(JSONObject partialData) {
 		String series = "";
-
 		String tempSeries = partialData.getString("title");
 		
 		int isSeries = tempSeries.indexOf("(");		
@@ -298,17 +289,5 @@ public class HttpRequest {
 	public String extraction(String original, String limit, int index) {
 		String[] split = original.split(limit, 2);
 		return split[index].toString();
-	}
-	
-	/*// Only for now
-	public void printResults() {
-		for(int i = 0; i < results.length; i++) {
-			for(int j = 0; j < 5; j++) {
-				if(results[i][j] != null) {
-					System.out.print(results[i][j] + ", ");
-				}
-			}
-			System.out.println();
-		}		
-	}*/
+	}	
 }

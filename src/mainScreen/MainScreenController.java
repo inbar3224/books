@@ -44,10 +44,20 @@ public class MainScreenController implements Initializable {
 			}			
 		}
 		else {
-			AlertBox.displayM("/messages/NoDatabase.fxml");
+			AlertBox noDataBase = new AlertBox();
+			noDataBase.displayM("/messages/NoDatabase.fxml");
 		}
 	}
 
+	// We have to confirm we indeed wanted to close the application 
+	public void confirmClose(Stage primaryStage) {
+		ConfirmBox confirmClose = new ConfirmBox();
+		boolean result = confirmClose.displayM("/messages/ConfirmBox.fxml");
+		if(result == true) {
+			Platform.exit();
+		}
+	}
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		Stage window = DreamReading.getPrimaryStage();
@@ -61,13 +71,5 @@ public class MainScreenController implements Initializable {
 			confirmClose(window);
 		});
 		window.setResizable(false);
-	}
-	
-	// We have to confirm we indeed wanted to close the application 
-	public static void confirmClose(Stage primaryStage) {
-		boolean result = ConfirmBox.displayM("/messages/ConfirmBox.fxml");
-		if(result == true) {
-			Platform.exit();
-		}
-	}
+	}	
 }

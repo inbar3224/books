@@ -3,6 +3,7 @@ package addContent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,14 +34,16 @@ public class SearchScreenController implements Initializable {
 		HttpRequest httpRequest = new HttpRequest();
 		SearchOutcomeListener listener = new SearchOutcomeListener() {			
 			@Override
-			public void onEvent(int status, String[][] resultsArray) {
+			public void onEvent(int status, ObservableList<Book> resultsArray) {
 				// No Internet
 				if(status == 0) {
-					AlertBox.displayM("/messages/NoInternet.fxml");
+					AlertBox noInternet = new AlertBox();
+					noInternet.displayM("/messages/NoInternet.fxml");
 				}
 				// No results
 				else if(status == 1) {
-					AlertBox.displayM("/messages/NoResults.fxml");
+					AlertBox noResults = new AlertBox();
+					noResults.displayM("/messages/NoResults.fxml");
 				}
 				// results
 				else if(status == 2) {
@@ -62,8 +65,7 @@ public class SearchScreenController implements Initializable {
 					}		
 				}		
 			}
-		};	
-		
+		};		
 		httpRequest.setSearchOutcomeListener(listener);
 		
 		if(event.getSource() == byFullName) {

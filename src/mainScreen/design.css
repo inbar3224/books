@@ -24,6 +24,10 @@
 	-fx-border-radius: 6;
 }
 
+.button:pressed {
+	-fx-background-color: transparent;
+}
+
 .input {
 	-fx-font-size: 15pt;
 	-fx-font-weight: normal;
