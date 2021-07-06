@@ -57,20 +57,7 @@ public class HttpRequest {
 			while((line = reader.readLine()) != null) { 
 				responseContent.append(line); 
 			}
-			reader.close();	
-			
-			// Check if we have results
-			boolean results = responseContent.toString().matches(".*\\bwork\\b.*");
-			// We have at least one result
-			if(results) {
-				xmlToJson(responseContent.toString());				
-				resultsAnalysis(finalResponse);
-				requestStatus = 2;
-			}
-			// No results - either we have spelling errors or the book just doesn't exist
-			else {
-				requestStatus = 1;				
-			}			
+			reader.close();						
 		}
 		catch(IOException e) {
 			// No Internet
@@ -81,7 +68,21 @@ public class HttpRequest {
 		// We have to close the request
 		finally {
 			connection.disconnect();			
+		}	
+		
+		// Check if we have results
+		boolean isThereResults = responseContent.toString().matches(".*\\bwork\\b.*");
+		// We have at least one result
+		if(isThereResults) {
+			xmlToJson(responseContent.toString());				
+			resultsAnalysis(finalResponse);
+			requestStatus = 2;
+		}
+		// No results - either we have spelling errors or the book just doesn't exist
+		else {
+			requestStatus = 1;				
 		}		
+			
 		if(listener != null) {
 			listener.onEvent(requestStatus, results);
 		}
@@ -150,7 +151,7 @@ public class HttpRequest {
 			series = getSeries(bestBook);
 			// Index / zero
 			if(series.equals("Standalone")) {
-				index = "0";
+				index = "";
 			}
 			else {
 				index = getIndex(bestBook);
@@ -256,7 +257,7 @@ public class HttpRequest {
 			date += Integer.toString(num) + ".";
 		}
 		else {
-			date = "0.0.0";
+			date = "";
 			return date;
 		}
 		// Do we have a month?
@@ -267,7 +268,7 @@ public class HttpRequest {
 			date += Integer.toString(num) + ".";
 		}
 		else {
-			date = "0.0.0";
+			date = "";
 			return date;
 		}
 		// Do we have a year?
@@ -278,7 +279,7 @@ public class HttpRequest {
 			date += Integer.toString(num);
 		}
 		else {
-			date = "0.0.0";
+			date = "";
 			return date;
 		}
 				

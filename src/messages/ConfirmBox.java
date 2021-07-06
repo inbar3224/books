@@ -30,30 +30,29 @@ public class ConfirmBox {
 		confirmScreenWindow.close();
 	}
 	
-	/* Show a yes / no question according to given fxml file - specific message for each question 
-	 * Also, return the answer to the caller */
-	public boolean displayM(String fxmlFile) {
-		try {
-			// Settings for stage
-			Parent root = (Parent) FXMLLoader.load(ConfirmBox.class.getClass().getResource(fxmlFile));			
-			
+	/* The caller asks us whether or not we want to close the application 
+	 * We must return an answer */
+	public boolean displayM() {
+		Stage confirmStage = new Stage();
+		// Settings for stage
+		try {			
+			Parent root = (Parent) FXMLLoader.load(ConfirmBox.class.getClass().getResource("/messages/ConfirmBox.fxml"));			
 			Scene scene = new Scene(root);	
-			
-			Stage confirmStage = new Stage();			
-			confirmStage.setScene(scene);
-			confirmStage.setTitle("DreamReading");			
-			confirmStage.setOnCloseRequest(e -> {
-				answer = false;
-				confirmStage.close();
-			});		
-			confirmStage.initModality(Modality.APPLICATION_MODAL);
-			confirmStage.setResizable(false);
-			// Showing stage
-			confirmStage.showAndWait();			
+			confirmStage.setScene(scene);						
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-		}		
+		}
+		confirmStage.setTitle("DreamReading");			
+		confirmStage.initModality(Modality.APPLICATION_MODAL);
+		confirmStage.setResizable(false);
+		confirmStage.setOnCloseRequest(e -> {
+			answer = false;
+			confirmStage.close();
+		});		
+		// Showing stage
+		confirmStage.showAndWait();
+		
 		return answer;
 	}	
 }

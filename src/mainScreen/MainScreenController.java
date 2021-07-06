@@ -28,20 +28,20 @@ public class MainScreenController implements Initializable {
 	private void connectionButton(ActionEvent event) {
 		DBConnection temp = new DBConnection();
 		Connection start = temp.connect();
+		
 		if(start != null) {
-			try {
-				Stage homeScreenWindow = DreamReading.getPrimaryStage();	
-				
-				// Settings for stage
+			Stage homeScreenWindow = DreamReading.getPrimaryStage();
+			// Settings for stage
+			try {				
 				Parent homeScreenParent = FXMLLoader.load(getClass().getResource("/homeScreen/HomeScreen.fxml"));				
 				Scene homeScreenScene = new Scene(homeScreenParent);
-				homeScreenWindow.setScene(homeScreenScene);
-				// Showing stage
-				homeScreenWindow.show();							
+				homeScreenWindow.setScene(homeScreenScene);											
 			}
 			catch (Exception exception) {
 				exception.printStackTrace();
-			}			
+			}
+			// Showing stage
+			homeScreenWindow.show();
 		}
 		else {
 			AlertBox noDataBase = new AlertBox();
@@ -52,7 +52,7 @@ public class MainScreenController implements Initializable {
 	// We have to confirm we indeed wanted to close the application 
 	public void confirmClose(Stage primaryStage) {
 		ConfirmBox confirmClose = new ConfirmBox();
-		boolean result = confirmClose.displayM("/messages/ConfirmBox.fxml");
+		boolean result = confirmClose.displayM();
 		if(result == true) {
 			Platform.exit();
 		}

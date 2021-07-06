@@ -25,18 +25,18 @@ public class HomeScreenController implements Initializable {
 	
 	@FXML
 	private void search(ActionEvent event) {
-		try {
-			Stage searchScreenWindow = DreamReading.getPrimaryStage();
-			// Settings for stage
+		Stage searchScreenWindow = DreamReading.getPrimaryStage();
+		// Settings for stage
+		try {			
 			Parent searchScreenParent = FXMLLoader.load(getClass().getResource("/addContent/SearchScreen.fxml"));				
 			Scene searchScreenScene = new Scene(searchScreenParent);
-			searchScreenWindow.setScene(searchScreenScene);
-			// Showing stage
-			searchScreenWindow.show();
+			searchScreenWindow.setScene(searchScreenScene);			
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
-		}			  
+		}
+		// Showing stage
+		searchScreenWindow.show();
 	}
 	
 	@FXML
@@ -57,18 +57,18 @@ public class HomeScreenController implements Initializable {
 	// Returns to main screen
 	@FXML
 	private void goBack(ActionEvent event) {
-		try {
-			Stage mainScreenWindow = DreamReading.getPrimaryStage();
-			// Settings for stage
+		Stage mainScreenWindow = DreamReading.getPrimaryStage();
+		// Settings for stage
+		try {			
 			Parent mainScreenParent = FXMLLoader.load(getClass().getResource("/mainScreen/MainScreen.fxml"));				
 			Scene mainScreenScene = new Scene(mainScreenParent);
-			mainScreenWindow.setScene(mainScreenScene);
-			// Showing stage
-			mainScreenWindow.show();
+			mainScreenWindow.setScene(mainScreenScene);			
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
-		}	
+		}
+		// Showing stage
+		mainScreenWindow.show();
 	}
 	
 	@Override

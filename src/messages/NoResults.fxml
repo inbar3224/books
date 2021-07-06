@@ -5,9 +5,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" stylesheets="@../mainScreen/design.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="messages.AlertBox">
    <children>
-      <Label layoutX="154.0" layoutY="20.0" text="The wanted item wasn't found." />
-      <Label layoutX="41.0" layoutY="70.0" text="Please check for any spelling errors or try refining your" />
-      <Label layoutX="130.0" layoutY="100.0" text="search by using different key words." />
-      <Label layoutX="92.0" layoutY="150.0" text="If we still can't find it, the item doesn't exist" />
+      <Label layoutX="165.0" layoutY="30.0" text="The wanted item wasn't found." />
+      <Label layoutX="23.0" layoutY="85.0" text="Please check for spelling errors or try using different key words" />
+      <Label layoutX="110.0" layoutY="140.0" text="If we still can't find it, the item doesn't exist" />
    </children>
 </AnchorPane>

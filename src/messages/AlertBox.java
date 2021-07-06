@@ -10,22 +10,21 @@ public class AlertBox {
 	
 	// Show alert message according to given fxml file - specific message for each problem
 	public void displayM(String fxmlFile) {
-		try {
-			// Settings for stage
+		Stage alertStage = new Stage();
+		// Settings for stage
+		try {			
 			Parent root = (Parent) FXMLLoader.load(AlertBox.class.getClass().getResource(fxmlFile));			
-			
-			Scene scene = new Scene(root);			
-			
-			Stage alertStage = new Stage();
-			alertStage.setTitle("DreamReading");	
-			alertStage.setScene(scene);					
-			alertStage.initModality(Modality.APPLICATION_MODAL);
-			alertStage.setResizable(false);
-			// Showing stage
-			alertStage.showAndWait();
+			Scene scene = new Scene(root);
+			alertStage.setScene(scene);			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		alertStage.setTitle("DreamReading");							
+		alertStage.initModality(Modality.APPLICATION_MODAL);
+		alertStage.setResizable(false);
+		// Showing stage
+		alertStage.showAndWait();
+		
 	}
 }

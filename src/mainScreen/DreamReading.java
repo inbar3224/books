@@ -18,19 +18,18 @@ public class DreamReading extends Application {
 	// Showing main screen (primary stage)
 	@Override
 	public void start(Stage primaryStage) {
+		setPrimaryStage(primaryStage);
+		// Settings for stage
 		try {
-			setPrimaryStage(primaryStage);
-			
-			// Settings for stage
 			Parent root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));			
 			Scene scene = new Scene(root);
-			realStage.setScene(scene);
-			// Showing stage
-			realStage.show();
+			realStage.setScene(scene);		
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
+		// Showing stage
+		realStage.show();
 	}
 	
 	/* So we'll be able to get the stage from anywhere in the application

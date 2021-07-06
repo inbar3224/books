@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import mainScreen.DBConnection;
 import mainScreen.DreamReading;
 import messages.AlertBox;
+import messages.SingleOrAllController;
 
 // Note to self - we didn't set controller in the fxml file because we set it in the SearchScreenController class
 
@@ -45,45 +46,72 @@ public class ResultsScreenController implements Initializable {
 	
 	@FXML
 	private void addBook(ActionEvent event) {
+		AlertBox message = new AlertBox();
 		Book chosen = tableView.getSelectionModel().getSelectedItem();
 		if(chosen != null) {
 			readAll();
 			boolean exist = alreadyExist.contains(chosen);
 			if(exist == false) {
-				insert(chosen.getName(), chosen.getAuthor(), chosen.getSeriesStandAlone(), chosen.getIndex(), chosen.getPublicationDate());
-				AlertBox inserted = new AlertBox();
-				inserted.displayM("/messages/InsertedBook.fxml");
+				if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
+					insert(chosen.getName(), chosen.getAuthor(), chosen.getSeriesStandAlone(),
+							chosen.getIndex(), chosen.getPublicationDate());
+					message.displayM("/messages/InsertedBook.fxml");
+				}
+				else {
+					SingleOrAllController singleOrAll = new SingleOrAllController();
+					boolean decision = singleOrAll.displayQuestion();
+					if(decision == true) {
+						// add as a single book
+						insert(chosen.getName(), chosen.getAuthor(), chosen.getSeriesStandAlone(),
+								chosen.getIndex(), chosen.getPublicationDate());
+						message.displayM("/messages/InsertedBook.fxml");
+					}
+					else {
+						// add series
+						System.out.println("series");
+					}					
+				}				
 			}
 			else {
-				AlertBox inserted = new AlertBox();
-				inserted.displayM("/messages/BookExists.fxml");
+				message.displayM("/messages/BookExists.fxml");
 			} 
 		}
 		else {
-			AlertBox noBookChosen = new AlertBox();
-			noBookChosen.displayM("/messages/NoBookChosen.fxml");
+			message.displayM("/messages/NoBookChosen.fxml");
 		}			
 	}
 	
 	@FXML 
 	private void addSeries(ActionEvent event) {
+		AlertBox message = new AlertBox();
+		Book chosen = tableView.getSelectionModel().getSelectedItem();
+		if(chosen != null) {		
+			if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
+				message.displayM("/messages/SingleNotSeries.fxml");
+			}
+			else {
 				
+			}
+		}
+		else {
+			message.displayM("/messages/NoBookChosen.fxml");
+		}			
 	}
 	
 	@FXML
 	private void goBack(ActionEvent event) {
-		try {
-			Stage searchScreenWindow = DreamReading.getPrimaryStage();
-			// Settings for stage
+		Stage searchScreenWindow = DreamReading.getPrimaryStage();
+		// Settings for stage
+		try {			
 			Parent searchScreenParent = FXMLLoader.load(getClass().getResource("/addContent/SearchScreen.fxml"));				
 			Scene searchScreenScene = new Scene(searchScreenParent);
-			searchScreenWindow.setScene(searchScreenScene);
-			// Showing stage
-			searchScreenWindow.show();
+			searchScreenWindow.setScene(searchScreenScene);			
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
+		// Showing stage
+		searchScreenWindow.show();
 	}
 	
 	public ResultsScreenController(String searchWord, ObservableList<Book> resultsArray) {
@@ -98,11 +126,12 @@ public class ResultsScreenController implements Initializable {
 	public void readAll() {
 		DBConnection temp = new DBConnection();
 		Connection connection = temp.connect();
+		
 		if(connection != null) {
 			PreparedStatement pStatement = null;
+			String sql = "SELECT * FROM books";
 			ResultSet rSet = null;
-			try {
-				String sql = "SELECT * FROM books";
+			try {				
 				pStatement = connection.prepareStatement(sql);
 				rSet = pStatement.executeQuery();
 				while(rSet.next()) {
@@ -112,13 +141,22 @@ public class ResultsScreenController implements Initializable {
 				}			
 			}
 			catch (SQLException e) {
-				AlertBox readingFailed = new AlertBox();
-				readingFailed.displayM("/messages/ReadingFailed.fxml");
+				System.out.println(e.toString());
 			}
 			finally {
 				try {
 					rSet.close();
-					pStatement.close();
+				} 
+				catch (SQLException e) {
+					System.out.println(e.toString());
+				}
+				try {
+					pStatement.close();					
+				} 
+				catch (SQLException e) {
+					System.out.println(e.toString());
+				}
+				try {
 					connection.close();
 				} 
 				catch (SQLException e) {
@@ -137,10 +175,11 @@ public class ResultsScreenController implements Initializable {
 	public void insert(String name, String author, String seriesSA, String index, String date) {
 		DBConnection temp = new DBConnection();
 		Connection connection = temp.connect();
+		
 		if(connection != null) {
-			PreparedStatement pStatement = null;				
-			try {
-				String sql = "INSERT INTO books(Name, Author, SeriesOrStandAlone, Number, PublicationDate) VALUES(?,?,?,?,?)";
+			PreparedStatement pStatement = null;
+			String sql = "INSERT INTO books(Name, Author, SeriesOrStandAlone, Number, PublicationDate) VALUES(?,?,?,?,?)";
+			try {				
 				pStatement = connection.prepareStatement(sql);
 				pStatement.setString(1, name);
 				pStatement.setString(2, author);
@@ -150,12 +189,16 @@ public class ResultsScreenController implements Initializable {
 				pStatement.execute();
 			}
 			catch (SQLException e) {
-				AlertBox insertionFailed = new AlertBox();
-				insertionFailed.displayM("/messages/InsertionFailed.fxml");
+				System.out.println(e.toString());
 			}
 			finally {
 				try {
 					pStatement.close();
+				} 
+				catch (SQLException e) {
+					System.out.println(e.toString());
+				}
+				try {					
 					connection.close();
 				} 
 				catch (SQLException e) {
@@ -168,6 +211,8 @@ public class ResultsScreenController implements Initializable {
 			noDataBase.displayM("/messages/NoDatabase.fxml");
 		}		
 	}
+	
+	
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {

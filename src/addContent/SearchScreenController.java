@@ -29,9 +29,9 @@ public class SearchScreenController implements Initializable {
 	 * The listener performs a proper response */
 	@FXML
 	private void chooseSearchMethod(ActionEvent event) {
-		String input = searchInput.getText();
-		
+		String input = searchInput.getText();		
 		HttpRequest httpRequest = new HttpRequest();
+		
 		SearchOutcomeListener listener = new SearchOutcomeListener() {			
 			@Override
 			public void onEvent(int status, ObservableList<Book> resultsArray) {
@@ -47,22 +47,21 @@ public class SearchScreenController implements Initializable {
 				}
 				// results
 				else if(status == 2) {
-					try {
-						Stage resultsScreenWindow = DreamReading.getPrimaryStage();	
-						
-						// Settings for stage
-						FXMLLoader loader = new FXMLLoader(getClass().getResource("/addContent/ResultsScreen.fxml"));						
-						ResultsScreenController controller = new ResultsScreenController(input, resultsArray);
-						loader.setController(controller);						
+					Stage resultsScreenWindow = DreamReading.getPrimaryStage();	
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/addContent/ResultsScreen.fxml"));						
+					ResultsScreenController controller = new ResultsScreenController(input, resultsArray);
+					loader.setController(controller);
+					// Settings for stage
+					try {												
 						Parent resultsScreenParent = loader.load();						
 						Scene resultsScreenScene = new Scene(resultsScreenParent);
-						resultsScreenWindow.setScene(resultsScreenScene);
-						// Showing stage
-						resultsScreenWindow.show();							
+						resultsScreenWindow.setScene(resultsScreenScene);													
 					}
 					catch (Exception exception) {
 						exception.printStackTrace();
-					}		
+					}
+					// Showing stage
+					resultsScreenWindow.show();
 				}		
 			}
 		};		
@@ -79,19 +78,18 @@ public class SearchScreenController implements Initializable {
 	// Returns to home screen
 	@FXML
 	private void goBack(ActionEvent event) {
-		try {
-			Stage homeScreenWindow = DreamReading.getPrimaryStage();	
-			
-			// Settings for stage
+		Stage homeScreenWindow = DreamReading.getPrimaryStage();		
+		// Settings for stage
+		try {			
 			Parent homeScreenParent = FXMLLoader.load(getClass().getResource("/homeScreen/HomeScreen.fxml"));				
 			Scene homeScreenScene = new Scene(homeScreenParent);
-			homeScreenWindow.setScene(homeScreenScene);
-			// Showing stage
-			homeScreenWindow.show();							
+			homeScreenWindow.setScene(homeScreenScene);										
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
-		}	
+		}
+		// Showing stage
+		homeScreenWindow.show();
 	}
 	
 	@Override

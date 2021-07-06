@@ -4,8 +4,7 @@
 }
 
 .label {
-	-fx-font-size: 15pt;
-	-fx-font-weight: bold; 
+	-fx-font-size: 15pt;	 
 }
 
 .label.title {
