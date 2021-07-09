@@ -39,7 +39,8 @@ public class ResultsScreenController implements Initializable {
 	@FXML private TableColumn<Book, String> name;
 	@FXML private TableColumn<Book, String> author;
 	@FXML private TableColumn<Book, String> seriesStandAlone;
-	@FXML private TableColumn<Book, String> index;	
+	@FXML private TableColumn<Book, String> index;
+	@FXML private TableColumn<Book, String> published;
 	@FXML private Button addSeries;
 	@FXML private Button addBook;
 	@FXML private Button goBack;
@@ -48,34 +49,48 @@ public class ResultsScreenController implements Initializable {
 	private void addBook(ActionEvent event) {
 		AlertBox message = new AlertBox();
 		Book chosen = tableView.getSelectionModel().getSelectedItem();
+		// We chose a book
 		if(chosen != null) {
 			readAll();
 			boolean exist = alreadyExist.contains(chosen);
+			// The book doesn't exists in our library
 			if(exist == false) {
+				// The book is a stand-alone - we could just add it
 				if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
 					insert(chosen.getName(), chosen.getAuthor(), chosen.getSeriesStandAlone(),
-							chosen.getIndex(), chosen.getPublicationDate());
+							chosen.getIndex(), chosen.myPublicationDate());
 					message.displayM("/messages/InsertedBook.fxml");
 				}
+				// The book is part of a series - should we add just this book or the whole series?
 				else {
+					SingleOrAllOutcomeListener listener = new SingleOrAllOutcomeListener() {						
+						@Override
+						public void decision(int status, boolean answer) {
+							if(status == 1) {
+								if(answer == true) {
+									// Add as a single book
+									insert(chosen.getName(), chosen.getAuthor(), chosen.getSeriesStandAlone(),
+											chosen.getIndex(), chosen.myPublicationDate());
+									message.displayM("/messages/InsertedBook.fxml");
+								}
+								else {
+									// Add the whole series
+									System.out.println("series");
+								}	
+							}							
+						}
+					};					
 					SingleOrAllController singleOrAll = new SingleOrAllController();
-					boolean decision = singleOrAll.displayQuestion();
-					if(decision == true) {
-						// add as a single book
-						insert(chosen.getName(), chosen.getAuthor(), chosen.getSeriesStandAlone(),
-								chosen.getIndex(), chosen.getPublicationDate());
-						message.displayM("/messages/InsertedBook.fxml");
-					}
-					else {
-						// add series
-						System.out.println("series");
-					}					
+					singleOrAll.setSingleOrAllOutcomeListener(listener);
+					singleOrAll.displayQuestion();									
 				}				
 			}
+			// The book already exists in our library
 			else {
 				message.displayM("/messages/BookExists.fxml");
 			} 
 		}
+		// No book was chosen
 		else {
 			message.displayM("/messages/NoBookChosen.fxml");
 		}			
@@ -85,7 +100,9 @@ public class ResultsScreenController implements Initializable {
 	private void addSeries(ActionEvent event) {
 		AlertBox message = new AlertBox();
 		Book chosen = tableView.getSelectionModel().getSelectedItem();
-		if(chosen != null) {		
+		// We chose a series of books
+		if(chosen != null) {
+			// The book is a stand-alone - has to be added by the right button
 			if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
 				message.displayM("/messages/SingleNotSeries.fxml");
 			}
@@ -93,6 +110,7 @@ public class ResultsScreenController implements Initializable {
 				
 			}
 		}
+		// Nothing was chosen
 		else {
 			message.displayM("/messages/NoBookChosen.fxml");
 		}			
@@ -134,10 +152,11 @@ public class ResultsScreenController implements Initializable {
 			try {				
 				pStatement = connection.prepareStatement(sql);
 				rSet = pStatement.executeQuery();
+				// while we still can - create a book instance and add it to our list
 				while(rSet.next()) {
-					Book inserted = new Book(rSet.getString("Name"), rSet.getString("Author"), 
+					Book item = new Book(rSet.getString("Name"), rSet.getString("Author"), 
 							rSet.getString("SeriesOrStandAlone"), rSet.getString("Number"),rSet.getString("PublicationDate"));
-					alreadyExist.add(inserted);
+					alreadyExist.add(item);
 				}			
 			}
 			catch (SQLException e) {
@@ -179,6 +198,7 @@ public class ResultsScreenController implements Initializable {
 		if(connection != null) {
 			PreparedStatement pStatement = null;
 			String sql = "INSERT INTO books(Name, Author, SeriesOrStandAlone, Number, PublicationDate) VALUES(?,?,?,?,?)";
+			// Setting parameters
 			try {				
 				pStatement = connection.prepareStatement(sql);
 				pStatement.setString(1, name);
@@ -210,13 +230,12 @@ public class ResultsScreenController implements Initializable {
 			AlertBox noDataBase = new AlertBox();
 			noDataBase.displayM("/messages/NoDatabase.fxml");
 		}		
-	}
-	
-	
+	}	
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		keyWord.setText(searchWord);
+		keyWord.getStyleClass().add("textArea");
+		keyWord.setText(searchWord);		
 		keyWord.setEditable(false);
 		
 		name.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -226,7 +245,9 @@ public class ResultsScreenController implements Initializable {
 		seriesStandAlone.setCellValueFactory(new PropertyValueFactory<>("seriesStandAlone"));
 		seriesStandAlone.getStyleClass().add("textArea");
 		index.setCellValueFactory(new PropertyValueFactory<>("index"));
-		index.getStyleClass().add("textArea");		
+		index.getStyleClass().add("textArea");
+		published.setCellValueFactory(new PropertyValueFactory<>("publicationDate"));
+		published.getStyleClass().add("textArea");
 		tableView.setItems(resultsList);
 		
 		addBook.setOnAction(e -> addBook(e));

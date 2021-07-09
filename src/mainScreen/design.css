@@ -12,9 +12,13 @@
 	-fx-font-weight: bold;
 }
 
-.textArea {
+.label.miniTitle {
 	-fx-font-size: 15pt;
-	-fx-font-weight: normal;
+	-fx-font-weight: bold;
+}
+
+.textArea {
+	-fx-font-size: 15pt;	
 }
 
 .button {

@@ -249,8 +249,8 @@ public class HttpRequest {
 		String date = "";
 		boolean dateExist;
 		
-		// Do we have a day?
-		temp = partialDate.getJSONObject("original_publication_day");
+		// Do we have a year?
+		temp = partialDate.getJSONObject("original_publication_year");
 		dateExist = temp.has("content");
 		if(dateExist) {
 			num = temp.getInt("content");
@@ -271,8 +271,8 @@ public class HttpRequest {
 			date = "";
 			return date;
 		}
-		// Do we have a year?
-		temp = partialDate.getJSONObject("original_publication_year");
+		// Do we have a day?
+		temp = partialDate.getJSONObject("original_publication_day");
 		dateExist = temp.has("content");
 		if(dateExist) {
 			num = temp.getInt("content");
@@ -282,7 +282,7 @@ public class HttpRequest {
 			date = "";
 			return date;
 		}
-				
+						
 		return date;
 	}
 		

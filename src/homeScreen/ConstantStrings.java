@@ -19,9 +19,17 @@ public class ConstantStrings {
 		"Otherwise, you'll be transfered to the Results\nscreen, where you'll be able to add the selected\n" +
 		"items to a database based library\n" + 
 		"PS: in the case of untitled books, know that\n" +
-		"they're simply future installments in an\nunfinished series";
+		"they're simply future installments in an\nunfinished series.";
 	
-	public static final String libraryInstructions = "";
+	public static final String libraryInstructions = 
+		"\n\n\nManage your database based library.\n" +
+		"You can search books according to any of the 5\n" +
+		"parameters presented in the table – thus making\n" + 
+		"it easier for you to understand if an item exists in\n" + 
+		"it or not.\n" + 
+		"In addition, you can delete either a single book\n" + 
+		"or an entire series from it.";
+	
 	public static final String calendarInstructions = "";
 	public static final String readingChallengesInstructions = "";
 }

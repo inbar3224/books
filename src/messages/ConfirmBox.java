@@ -46,6 +46,7 @@ public class ConfirmBox {
 		confirmStage.setTitle("DreamReading");			
 		confirmStage.initModality(Modality.APPLICATION_MODAL);
 		confirmStage.setResizable(false);
+		// In case we don't want to close
 		confirmStage.setOnCloseRequest(e -> {
 			answer = false;
 			confirmStage.close();

@@ -41,7 +41,18 @@ public class HomeScreenController implements Initializable {
 	
 	@FXML
 	private void library(ActionEvent event) {
-		
+		Stage libraryScreenWindow = DreamReading.getPrimaryStage();
+		// Settings for stage
+		try {
+			Parent libraryScreenParent = FXMLLoader.load(getClass().getResource("/myLibrary/MyLibraryScreen.fxml"));
+			Scene libraryScreenScene = new Scene(libraryScreenParent);
+			libraryScreenWindow.setScene(libraryScreenScene);
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		// Showing stage
+		libraryScreenWindow.show();
 	}
 	
 	@FXML
@@ -79,6 +90,8 @@ public class HomeScreenController implements Initializable {
 		preview.setEditable(false);
 		
 		searchBooks.setOnMouseEntered(e -> preview.setText(ConstantStrings.searchInstructions));
-		searchBooks.setOnMouseExited(e -> preview.setText(ConstantStrings.generalText));		
+		searchBooks.setOnMouseExited(e -> preview.setText(ConstantStrings.generalText));
+		viewMyLibrary.setOnMouseEntered(e -> preview.setText(ConstantStrings.libraryInstructions));
+		viewMyLibrary.setOnMouseExited(e -> preview.setText(ConstantStrings.generalText));
 	}	
 }

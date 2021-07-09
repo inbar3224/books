@@ -1,5 +1,10 @@
 package addContent;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Book {
 	
 	private String name, author, seriesStandAlone, index, publicationDate;
@@ -11,7 +16,8 @@ public class Book {
 		index = fourth;
 		publicationDate = fifth;
 	}
-
+	
+	// When we add the books to the TableView, we need to get the data somehow...
 	public String getAuthor() {
 		return author;
 	}
@@ -28,10 +34,44 @@ public class Book {
 		return index;
 	}
 	
-	public String getPublicationDate() {
+	public String myPublicationDate() {
 		return publicationDate;
 	}
 	
+	// Specific format of publication date for the "Published" column	
+	public String getPublicationDate() {
+		if(publicationDate.compareTo("") == 0) {
+			return "No";
+		}
+		
+		Date mine = new Date();
+		DateFormat dFormat = new SimpleDateFormat("yyyy.MM.dd");
+		String current = dFormat.format(new Date());
+		Date finalCurrent = new Date();
+				
+		try {
+			mine = dFormat.parse(publicationDate);
+		} 
+		catch (ParseException e) {
+			e.printStackTrace();
+		}
+		try {
+			finalCurrent = dFormat.parse(current);
+		} 
+		catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		if(mine.after(finalCurrent)) {
+			return "No";
+		}
+		else {
+			return publicationDate;
+		}
+	}
+	
+	/* In order to see if we're trying to add items that already exist in our library,
+	 * We have to compare each and every new item with what we already have */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
