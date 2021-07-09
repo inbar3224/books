@@ -75,7 +75,8 @@ public class ResultsScreenController implements Initializable {
 								}
 								else {
 									// Add the whole series
-									System.out.println("series");
+									insertAll(chosen.getSeriesStandAlone());
+									message.displayM("/messages/InsertedSeries.fxml");
 								}	
 							}							
 						}
@@ -106,8 +107,10 @@ public class ResultsScreenController implements Initializable {
 			if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
 				message.displayM("/messages/SingleNotSeries.fxml");
 			}
-			else {
-				
+			// Add the whole series
+			else {				
+				insertAll(chosen.getSeriesStandAlone());
+				message.displayM("/messages/InsertedSeries.fxml");
 			}
 		}
 		// Nothing was chosen
@@ -230,7 +233,36 @@ public class ResultsScreenController implements Initializable {
 			AlertBox noDataBase = new AlertBox();
 			noDataBase.displayM("/messages/NoDatabase.fxml");
 		}		
-	}	
+	}
+	
+	// Insert entire series
+	public void insertAll(String input) {
+		HttpRequest httpRequest = new HttpRequest();		
+		SearchOutcomeListener listener = new SearchOutcomeListener() {			
+			@Override
+			public void onEvent(int status, ObservableList<Book> resultsArray) {
+				// No Internet
+				if(status == 0) {
+					AlertBox noInternet = new AlertBox();
+					noInternet.displayM("/messages/NoInternet.fxml");
+				}
+				else if(status == 2) {
+					boolean exist;
+					for(Book book : resultsArray) {
+						if(input.compareTo(book.getSeriesStandAlone()) == 0) {
+							exist = alreadyExist.contains(book);
+							if(exist == false) {
+								insert(book.getName(), book.getAuthor(), book.getSeriesStandAlone(),
+										book.getIndex(), book.myPublicationDate());
+							}
+						}						
+					}					
+				}
+			}
+		};
+		httpRequest.setSearchOutcomeListener(listener);
+		httpRequest.request(input, 1);
+	}
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {

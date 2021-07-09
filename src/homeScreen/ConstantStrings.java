@@ -24,11 +24,11 @@ public class ConstantStrings {
 	public static final String libraryInstructions = 
 		"\n\n\nManage your database based library.\n" +
 		"You can search books according to any of the 5\n" +
-		"parameters presented in the table – thus making\n" + 
-		"it easier for you to understand if an item exists in\n" + 
-		"it or not.\n" + 
+		"parameters presented in the table – thus\n" + 
+		"making it easier for you to understand if an\n" + 
+		"item exists in it or not.\n" + 
 		"In addition, you can delete either a single book\n" + 
-		"or an entire series from it.";
+		"or an entire series from it.\n";
 	
 	public static final String calendarInstructions = "";
 	public static final String readingChallengesInstructions = "";
