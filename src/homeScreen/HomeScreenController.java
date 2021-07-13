@@ -19,7 +19,6 @@ public class HomeScreenController implements Initializable {
 	@FXML private Button searchBooks;
 	@FXML private Button viewMyLibrary;
 	@FXML private Button calendar;
-	@FXML private Button myReadingChallenges;
 	@FXML private Button goBack;
 	@FXML private TextArea preview;
 	
@@ -57,12 +56,18 @@ public class HomeScreenController implements Initializable {
 	
 	@FXML
 	private void Calendar(ActionEvent event) {
-		
-	}
-	
-	@FXML
-	private void challengeList(ActionEvent event) {
-		
+		Stage calendarScreenWindow = DreamReading.getPrimaryStage();
+		// Settings for stage
+		try {
+			Parent calendarScreenParent = FXMLLoader.load(getClass().getResource("/calendar/CalendarScreen.fxml"));
+			Scene calendarScreenScene = new Scene(calendarScreenParent);
+			calendarScreenWindow.setScene(calendarScreenScene);
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		// Showing stage
+		calendarScreenWindow.show();
 	}
 	
 	// Returns to main screen
@@ -93,5 +98,7 @@ public class HomeScreenController implements Initializable {
 		searchBooks.setOnMouseExited(e -> preview.setText(ConstantStrings.generalText));
 		viewMyLibrary.setOnMouseEntered(e -> preview.setText(ConstantStrings.libraryInstructions));
 		viewMyLibrary.setOnMouseExited(e -> preview.setText(ConstantStrings.generalText));
+		calendar.setOnMouseEntered(e -> preview.setText(ConstantStrings.calendarInstructions));
+		calendar.setOnMouseExited(e -> preview.setText(ConstantStrings.generalText));
 	}	
 }

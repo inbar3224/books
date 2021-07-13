@@ -62,6 +62,10 @@ public class HttpRequest {
 		catch(IOException e) {
 			// No Internet
 			requestStatus = 0;
+			if(listener != null) {
+				listener.onEvent(requestStatus, results);
+				return;
+			}
 			// e.printStackTrace();
 		}
 		

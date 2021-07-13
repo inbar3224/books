@@ -12,8 +12,8 @@
       <VBox alignment="CENTER" layoutX="50.0" layoutY="200.0" prefHeight="244.0" prefWidth="700.0" spacing="80.0">
          <children>
             <TextField fx:id="searchInput" alignment="CENTER" styleClass="input" />
-            <Button fx:id="byFullName" mnemonicParsing="false" onAction="#chooseSearchMethod" text="By Full name (of either book or series)" />
-            <Button fx:id="byAuthorName" mnemonicParsing="false" onAction="#chooseSearchMethod" text="By Author's last name + part of title" />
+            <Button fx:id="byFullName" mnemonicParsing="false" onAction="#chooseSearchMethod" text="By full name (of either book or series)" />
+            <Button fx:id="byAuthorName" mnemonicParsing="false" onAction="#chooseSearchMethod" text="By author's last name + part of title" />
          </children>
       </VBox>
       <Button fx:id="goBack" layoutX="700.0" layoutY="601.0" mnemonicParsing="false" onAction="#goBack" text="Go Back" />

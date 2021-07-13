@@ -30,6 +30,13 @@ public class ConstantStrings {
 		"In addition, you can delete either a single book\n" + 
 		"or an entire series from it.\n";
 	
-	public static final String calendarInstructions = "";
-	public static final String readingChallengesInstructions = "";
+	public static final String calendarInstructions = 
+		"\n\nBooks' publication dates may vary, and so in\n" +
+		"this screen, you have 2 options:\n" + 
+		"1. The notifications regarding this week (a week\n" + 
+		"from today) would appear on the screen either\n" + 
+		"way.\n" + 
+		"2. If you wish to view a further date, search for a\n" + 
+		"marked date on the calendar and press it. The\n" + 
+		"details would appear in a different table.";
 }

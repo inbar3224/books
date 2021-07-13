@@ -68,7 +68,7 @@ public class MyLibraryController implements Initializable {
 								message.displayM("/messages/BookWasDeleted.fxml");
 							}
 							else {
-								// Add the whole series
+								// remove the whole series
 								deleteAll(chosen.getSeriesStandAlone());
 								message.displayM("/messages/SeriesWasDeleted.fxml");
 							}	
@@ -139,7 +139,7 @@ public class MyLibraryController implements Initializable {
 				}
 			}
 			library.remove(wanted);
-			tableView.getSelectionModel().clearSelection();			
+			// tableView.getSelectionModel().clearSelection();			
 		} 
 		else {
 			AlertBox noDataBase = new AlertBox();
@@ -150,9 +150,16 @@ public class MyLibraryController implements Initializable {
 	public void deleteAll(String input) {
 		for(Book book : library) {
 			if(input.compareTo(book.getSeriesStandAlone()) == 0) {
+				// tableView.getSelectionModel().select(book);
 				delete(book);
+			}						
+		}	
+		/*library.forEach(book -> {
+			if(input.compareTo(book.getSeriesStandAlone()) == 0) {
+				delete(book);				
 			}
-		}
+		});*/
+		System.out.println("remove");
 	}
 	
 	public void readAll() {
@@ -252,9 +259,9 @@ public class MyLibraryController implements Initializable {
 			});
 		});
 		
-		// Wrap the FilteredList in a SortedList. 
+		// "Convert" the filtered list in a sorted list. 
 		SortedList<Book> sortedData = new SortedList<>(filteredData);
-		// Bind the SortedList comparator to the TableView comparator - so we'll be able to sort the sorted list by column
+		// bind it's comparator to the table view comparator - so we'll be able to sort the sorted list by column
 		sortedData.comparatorProperty().bind(tableView.comparatorProperty());
 		// Add sorted (and filtered) data to the table.
 		tableView.setItems(sortedData);		

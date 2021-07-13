@@ -10,16 +10,15 @@
    <children>
       <Label layoutX="296.0" layoutY="52.0" styleClass="title" text="Home Screen" />
       <Label layoutX="138.0" layoutY="120.0" styleClass="miniTitle" text="Options" />
-      <VBox alignment="CENTER" layoutX="50.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="250.0" spacing="76.0">
+      <VBox alignment="CENTER" layoutX="90.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="170.0" spacing="136.0">
          <children>
             <Button fx:id="searchBooks" mnemonicParsing="false" onAction="#search" text="Search Books" />
             <Button fx:id="viewMyLibrary" mnemonicParsing="false" onAction="#library" text="View My Library" />
             <Button fx:id="calendar" mnemonicParsing="false" onAction="#Calendar" text="Calendar" />
-            <Button fx:id="myReadingChallenges" mnemonicParsing="false" onAction="#challengeList" text="My Reading Challenges" />
          </children>
       </VBox>
-      <Label layoutX="493.0" layoutY="120.0" styleClass="miniTitle" text="Details" />
-      <TextArea fx:id="preview" layoutX="300.0" layoutY="170.0" prefHeight="405.0" prefWidth="450.0" />
+      <Label layoutX="453.0" layoutY="120.0" styleClass="miniTitle" text="Details" />
+      <TextArea fx:id="preview" layoutX="260.0" layoutY="170.0" prefHeight="405.0" prefWidth="450.0" />
       <Button fx:id="goBack" layoutX="700.0" layoutY="601.0" mnemonicParsing="false" onAction="#goBack" text="Go Back" />
    </children>
 </AnchorPane>

@@ -36,3 +36,7 @@
 	-fx-font-weight: normal;
 	-fx-background-radius: 6;
 }
+
+.datePicker {
+    -fx-font-size: 19pt;
+}
