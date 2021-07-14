@@ -3,7 +3,8 @@ package homeScreen;
 public class ConstantStrings {
 	
 	public static final String generalText =
-		"\n\n\nChoose one of those options by pressing it's\n" + "button.\n" +
+		"\n\n\nChoose one of those options by pressing it's\n" + 
+		"button.\n" +
 		"Every screen contains a 'Go Back' button on the\n" +
 		"right side of the screen that would allow you\n" + 
 		"to return to its previous screen without\n" +
@@ -15,20 +16,24 @@ public class ConstantStrings {
 		"This is a customized search - you'll have to\n" +
 		"know at least a partial name of the book/series\n" +
 		"in order to search it.\n" +
-		"In the case of no internet connection or\nzero search results, you'll be notified.\n" +
-		"Otherwise, you'll be transfered to the Results\nscreen, where you'll be able to add the selected\n" +
+		"In the case of no internet connection or\n" + 
+		"zero search results, you'll be notified.\n" +
+		"Otherwise, you'll be transfered to the Results\n" + 
+		"screen, where you'll be able to add the selected\n" +
 		"items to a database based library\n" + 
 		"PS: in the case of untitled books, know that\n" +
-		"they're simply future installments in an\nunfinished series.";
+		"they're simply future installments in an\n" + 
+		"unfinished series.";
 	
 	public static final String libraryInstructions = 
-		"\n\n\nManage your database based library.\n" +
-		"You can search books according to any of the 5\n" +
+		"\n\nManage your database based library.\n" +
+		"You can filter the list according to any of the 5\n" +
 		"parameters presented in the table – thus\n" + 
 		"making it easier for you to understand if an\n" + 
 		"item exists in it or not.\n" + 
 		"In addition, you can delete either a single book\n" + 
-		"or an entire series from it.\n";
+		"or an entire series by pressing it's row and the\n" + 
+		"right button.\n";
 	
 	public static final String calendarInstructions = 
 		"\n\nBooks' publication dates may vary, and so in\n" +

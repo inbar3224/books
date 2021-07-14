@@ -185,11 +185,7 @@ public class ResultsScreenController implements Initializable {
 					System.out.println(e.toString());
 				}
 			}
-		}
-		else {
-			AlertBox noDataBase = new AlertBox();
-			noDataBase.displayM("/messages/NoDatabase.fxml");
-		}	
+		}		
 	}
 	
 	/* Insert selected books into my library (SQLite database)
@@ -228,11 +224,7 @@ public class ResultsScreenController implements Initializable {
 					System.out.println(e.toString());
 				}
 			}
-		} 
-		else {
-			AlertBox noDataBase = new AlertBox();
-			noDataBase.displayM("/messages/NoDatabase.fxml");
-		}		
+		}			
 	}
 	
 	// Insert entire series

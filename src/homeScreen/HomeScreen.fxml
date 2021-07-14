@@ -10,7 +10,7 @@
    <children>
       <Label layoutX="296.0" layoutY="52.0" styleClass="title" text="Home Screen" />
       <Label layoutX="138.0" layoutY="120.0" styleClass="miniTitle" text="Options" />
-      <VBox alignment="CENTER" layoutX="90.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="170.0" spacing="136.0">
+      <VBox alignment="CENTER" layoutX="80.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="180.0" spacing="136.0">
          <children>
             <Button fx:id="searchBooks" mnemonicParsing="false" onAction="#search" text="Search Books" />
             <Button fx:id="viewMyLibrary" mnemonicParsing="false" onAction="#library" text="View My Library" />

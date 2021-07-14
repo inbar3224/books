@@ -14,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import messages.AlertBox;
 import messages.ConfirmBox;
 
 public class MainScreenController implements Initializable {
@@ -42,11 +41,7 @@ public class MainScreenController implements Initializable {
 			}
 			// Showing stage
 			homeScreenWindow.show();
-		}
-		else {
-			AlertBox noDataBase = new AlertBox();
-			noDataBase.displayM("/messages/NoDatabase.fxml");
-		}
+		}		
 	}
 
 	// We have to confirm we indeed wanted to close the application 

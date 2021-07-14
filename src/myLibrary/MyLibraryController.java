@@ -140,11 +140,7 @@ public class MyLibraryController implements Initializable {
 			}
 			library.remove(wanted);
 			// tableView.getSelectionModel().clearSelection();			
-		} 
-		else {
-			AlertBox noDataBase = new AlertBox();
-			noDataBase.displayM("/messages/NoDatabase.fxml");
-		}		
+		}				
 	}
 	
 	public void deleteAll(String input) {
