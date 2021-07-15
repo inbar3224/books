@@ -10,10 +10,8 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="800.0" stylesheets="@../mainScreen/design.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="calendar.CalendarScreenController">
    <children>
       <Label layoutX="326.0" styleClass="title" text="Calendar:" />
-      <Label layoutX="50.0" layoutY="50.0" styleClass="miniTitle" text="Future publication dates:" />
-      <DatePicker fx:id="calendar" layoutX="50.0" layoutY="80.0" prefHeight="25.0" prefWidth="235.0" styleClass="datePicker" />
-      <Label layoutX="365.0" layoutY="50.0" styleClass="miniTitle" text="Notifications regarding this week:" />
-      <TableView fx:id="tableView1" layoutX="365.0" layoutY="80.0" prefHeight="220.0" prefWidth="385.0">
+      <Label layoutX="351.0" layoutY="50.0" styleClass="miniTitle" text="This week:" />
+      <TableView fx:id="booksOfTheWeek" layoutY="80.0" prefHeight="200.0" prefWidth="800.0">
         <columns>
           <TableColumn fx:id="name1" prefWidth="205.0" text="Name" />
           <TableColumn fx:id="author1" prefWidth="205.0" text="Author" />
@@ -22,16 +20,16 @@
             <TableColumn fx:id="published1" prefWidth="105.0" text="Published" />
         </columns>
       </TableView>
-      <Label layoutX="365.0" layoutY="300.0" styleClass="miniTitle" text="Notifications according to specific dates:" />
-      <TableView fx:id="tableView2" layoutX="365.0" layoutY="330.0" prefHeight="220.0" prefWidth="385.0">
+      <Label layoutX="283.0" layoutY="280.0" styleClass="miniTitle" text="Choose publication date:" />
+      <DatePicker fx:id="calendar" editable="false" layoutX="283.0" layoutY="310.0" onAction="#getPressedDate" prefHeight="30.0" prefWidth="234.0" styleClass="datePicker" />
+      <TableView fx:id="booksByDate" layoutY="380.0" prefHeight="200.0" prefWidth="800.0">
          <columns>
-            <TableColumn fx:id="name2" prefWidth="205.0" text="Name" />
-            <TableColumn fx:id="author2" prefWidth="205.0" text="Author" />
+            <TableColumn fx:id="name2" prefWidth="260.0" text="Name" />
+            <TableColumn fx:id="author2" prefWidth="260.0" text="Author" />
             <TableColumn fx:id="seriesStandAlone2" prefWidth="210.0" text="Series or Stand-alone" />
             <TableColumn fx:id="index2" prefWidth="70.0" text="Index" />
-            <TableColumn fx:id="published2" prefWidth="105.0" text="Published" />
          </columns>
       </TableView>
-      <Button fx:id="goBack" layoutX="700.0" layoutY="601.0" mnemonicParsing="false" text="Go Back" />
+      <Button fx:id="goBack" layoutX="700.0" layoutY="601.0" mnemonicParsing="false" onAction="#goBack" text="Go Back" />
    </children>
 </AnchorPane>

@@ -1,9 +1,7 @@
 package addContent;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Book {
 	
@@ -44,30 +42,17 @@ public class Book {
 			return "No";
 		}
 		
-		Date mine = new Date();
-		DateFormat dFormat = new SimpleDateFormat("yyyy.MM.dd");
-		String current = dFormat.format(new Date());
-		Date finalCurrent = new Date();
-				
-		try {
-			mine = dFormat.parse(publicationDate);
-		} 
-		catch (ParseException e) {
-			e.printStackTrace();
-		}
-		try {
-			finalCurrent = dFormat.parse(current);
-		} 
-		catch (ParseException e) {
-			e.printStackTrace();
-		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String tempMyDate = publicationDate.replace(".", "-");
+		LocalDate today = LocalDate.parse(LocalDate.now().toString(), formatter);
+		LocalDate myDate = LocalDate.parse(tempMyDate,formatter);
 		
-		if(mine.after(finalCurrent)) {
+		if(myDate.isAfter(today)) {
 			return "No";
 		}
 		else {
 			return publicationDate;
-		}
+		}		
 	}
 	
 	/* In order to see if we're trying to add items that already exist in our library,

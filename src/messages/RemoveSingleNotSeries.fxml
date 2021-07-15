@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" stylesheets="@../mainScreen/design.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="messages.AlertBox">
+   <children>
+      <Label layoutX="185.0" layoutY="50.0" text="This book is a Standalone." />
+      <Label layoutX="73.0" layoutY="120.0" text="Please press &quot;Delete Book&quot; or choose another book" />
+   </children>
+</AnchorPane>

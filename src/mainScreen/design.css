@@ -38,5 +38,9 @@
 }
 
 .datePicker {
-    -fx-font-size: 19pt;
+    -fx-font-size: 20pt;
+}
+
+.date-cell.selected {
+	-fx-background-color: linear-gradient(to bottom right, #33ccff 0%, #ff99cc 100%);
 }

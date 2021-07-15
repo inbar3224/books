@@ -9,7 +9,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="800.0" stylesheets="@../mainScreen/design.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="myLibrary.MyLibraryController">
    <children>
-      <Label layoutX="311.0" styleClass="title" text="My Library:" />
+      <Label layoutX="186.0" styleClass="title" text="My Library:" />
+      <Label fx:id="numberOfBooks" alignment="CENTER" layoutX="364.0" prefHeight="48.0" prefWidth="250.0" styleClass="title" />
       <Label layoutX="50.0" layoutY="60.0" styleClass="title" text="Search:" />
       <TextField fx:id="keyWord" alignment="CENTER" layoutX="163.0" layoutY="64.0" prefHeight="30.0" prefWidth="587.0" styleClass="textArea" />
       <TableView fx:id="tableView" layoutY="120.0" prefHeight="450.0" prefWidth="800.0">

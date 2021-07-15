@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -33,7 +34,9 @@ import messages.RemoveSingleOrAllController;
 public class MyLibraryController implements Initializable {
 	
 	private ObservableList<Book> library;
+	private int number = 0;
 	
+	@FXML private Label numberOfBooks;
 	@FXML private TextField keyWord;
 	@FXML private TableView<Book> tableView;
 	@FXML private TableColumn<Book, String> name;
@@ -51,12 +54,13 @@ public class MyLibraryController implements Initializable {
 		Book chosen = tableView.getSelectionModel().getSelectedItem();
 		// We chose a book
 		if(chosen != null) {
-			// The book is a stand-alone - we could just add it
+			// The book is a stand-alone - we could just remove it
 			if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
-				delete(chosen);
+				delete(chosen);				
+				adjustments();
 				message.displayM("/messages/BookWasDeleted.fxml");
 			}
-			// The book is part of a series - should we add just this book or the whole series?
+			// The book is part of a series - should we remove just this book or the whole series?
 			else {
 				SingleOrAllOutcomeListener listener = new SingleOrAllOutcomeListener() {					
 					@Override
@@ -65,6 +69,7 @@ public class MyLibraryController implements Initializable {
 							if(answer == true) {
 								// remove a single book
 								delete(chosen);
+								adjustments();
 								message.displayM("/messages/BookWasDeleted.fxml");
 							}
 							else {
@@ -88,7 +93,24 @@ public class MyLibraryController implements Initializable {
 	
 	@FXML
 	private void deleteSeries(ActionEvent event) {
-		
+		AlertBox message = new AlertBox();
+		Book chosen = tableView.getSelectionModel().getSelectedItem();
+		// We chose a series of books
+		if(chosen != null) {
+			// The book is a stand-alone - has to be removed by the right button
+			if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
+				message.displayM("/messages/RemoveSingleNotSeries.fxml");
+			}
+			// remove the whole series
+			else {				
+				deleteAll(chosen.getSeriesStandAlone());
+				message.displayM("/messages/SeriesWasDeleted.fxml");
+			}
+		}
+		// Nothing was chosen
+		else {
+			message.displayM("/messages/NoBookChosen.fxml");
+		}
 	}
 	
 	@FXML
@@ -138,24 +160,38 @@ public class MyLibraryController implements Initializable {
 					System.out.println(e.toString());
 				}
 			}
-			library.remove(wanted);
-			// tableView.getSelectionModel().clearSelection();			
+			library.remove(wanted);			
 		}				
 	}
 	
 	public void deleteAll(String input) {
+		ObservableList<Book> deleteArray = FXCollections.observableArrayList();
 		for(Book book : library) {
 			if(input.compareTo(book.getSeriesStandAlone()) == 0) {
-				// tableView.getSelectionModel().select(book);
-				delete(book);
-			}						
-		}	
-		/*library.forEach(book -> {
-			if(input.compareTo(book.getSeriesStandAlone()) == 0) {
-				delete(book);				
+				deleteArray.add(book);
 			}
-		});*/
-		System.out.println("remove");
+		}
+		
+		for(Book book : deleteArray) {
+			delete(book);
+		}
+		
+		reloadScreen();
+	}
+	
+	public void reloadScreen() {
+		Stage libraryScreenWindow = DreamReading.getPrimaryStage();
+		// Settings for stage
+		try {
+			Parent libraryScreenParent = FXMLLoader.load(getClass().getResource("/myLibrary/MyLibraryScreen.fxml"));
+			Scene libraryScreenScene = new Scene(libraryScreenParent);
+			libraryScreenWindow.setScene(libraryScreenScene);
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		// Showing stage
+		libraryScreenWindow.show();
 	}
 	
 	public void readAll() {
@@ -174,6 +210,7 @@ public class MyLibraryController implements Initializable {
 					Book item = new Book(rSet.getString("Name"), rSet.getString("Author"), 
 							rSet.getString("SeriesOrStandAlone"), rSet.getString("Number"),rSet.getString("PublicationDate"));
 					library.add(item);
+					number++;
 				}			
 			}
 			catch (SQLException e) {
@@ -200,16 +237,23 @@ public class MyLibraryController implements Initializable {
 				}
 			}
 		}
-		else {
-			AlertBox noDataBase = new AlertBox();
-			noDataBase.displayM("/messages/NoDatabase.fxml");
-		}		
+	}
+	
+	public void setNumberOfBooks(int number) {
+		String numberToString = Integer.toString(number) + " books";
+		numberOfBooks.setText(numberToString);
+	}
+	
+	public void adjustments() {
+		tableView.getSelectionModel().clearSelection();
+		setNumberOfBooks(number - 1);
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		// getting data from the database
 		readAll();
+		setNumberOfBooks(number);
 		
 		// setting data in the tableView
 		name.setCellValueFactory(new PropertyValueFactory<>("name"));

@@ -154,7 +154,7 @@ public class HttpRequest {
 			// Series / Stand-alone
 			series = getSeries(bestBook);
 			// Index / zero
-			if(series.equals("Standalone")) {
+			if(series.compareTo("Standalone") == 0) {
 				index = "";
 			}
 			else {
@@ -218,7 +218,7 @@ public class HttpRequest {
 			if(last == ' ') {
 				series = series.replaceAll(" $","");
 			}
-			if(series.equals("Untitled")) {
+			if(series.compareTo("Untitled") == 0) {
 				series = "Standalone";
 			}
 		}
@@ -240,9 +240,7 @@ public class HttpRequest {
 			index = extraction(tempIndex, "\\#", 1);
 			index = extraction(index, "\\)", 0);
 		}
-		else {
-			index = "0";
-		}		
+				
 		return index;		
 	}	
 	
@@ -269,6 +267,9 @@ public class HttpRequest {
 		dateExist = temp.has("content");
 		if(dateExist) {
 			num = temp.getInt("content");
+			if(num >= 1 && num <= 9) {
+				date += "0";
+			}
 			date += Integer.toString(num) + ".";
 		}
 		else {
@@ -280,6 +281,9 @@ public class HttpRequest {
 		dateExist = temp.has("content");
 		if(dateExist) {
 			num = temp.getInt("content");
+			if(num >= 1 && num <= 9) {
+				date += "0";
+			}
 			date += Integer.toString(num);
 		}
 		else {
