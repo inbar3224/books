@@ -9,9 +9,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-import com.sun.javafx.scene.control.skin.DatePickerContent;
-import com.sun.javafx.scene.control.skin.DatePickerSkin;
-
 import addContent.Book;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
