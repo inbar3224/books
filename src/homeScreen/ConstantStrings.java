@@ -36,8 +36,10 @@ public class ConstantStrings {
 		"right button.\n";
 	
 	public static final String calendarInstructions = 
-		"\n\nBooks' publication dates may vary, and so in\n" +
-		"this screen, you have 2 options:\n" + 
+		"\nBooks' publication dates may vary, and so in\n" +
+		"this screen, only the dates that are both in the\n" +
+		"future and contain books are marked.\n" +
+		"You have 2 options:\n" + 
 		"1. The notifications regarding this week (a week\n" + 
 		"from today) would appear on the screen either\n" + 
 		"way.\n" + 

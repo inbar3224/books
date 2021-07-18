@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import addContent.Book;
@@ -20,11 +22,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import mainScreen.DBConnection;
 import mainScreen.DreamReading;
 
@@ -146,12 +150,45 @@ public class CalendarScreenController implements Initializable {
 		booksByDate.setItems(specificDate);
 	}
 	
+	public void initializeCalendar(LocalDate today) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		List<LocalDate> dates = new ArrayList<LocalDate>();
+		
+		for(Book book : library) {
+			if(book.myPublicationDate().compareTo("") != 0) {
+				String tempMyDate = book.myPublicationDate().replace(".", "-");
+				LocalDate myDate = LocalDate.parse(tempMyDate,formatter);
+				if(myDate.isAfter(today) || myDate.compareTo(today) == 0) {
+					dates.add(myDate);
+				}
+			}			
+		}
+		
+		calendar.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+			@Override
+			public DateCell call(DatePicker param) {
+				return new DateCell(){
+					@Override
+					public void updateItem(LocalDate item, boolean empty) {
+						super.updateItem(item, empty);
+						if (!empty && item != null) {
+							if(dates.contains(item)) {
+								this.getStyleClass().add("selected");
+							}
+						}
+					}
+				};
+			}
+		});
+	}
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		readAll();
 		permanent = FXCollections.observableArrayList();
 		specificDate = FXCollections.observableArrayList();
 		LocalDate date = LocalDate.now();
+		initializeCalendar(date);
 		checkForBooks(date, 8, permanent);
 		
 		// setting data in the tableView
