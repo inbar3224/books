@@ -17,7 +17,7 @@ public class ConfirmBox {
 	@FXML private Button yes;
 	@FXML private Button no;
 		
-	// Confirm or deny
+	/* Confirm or deny */
 	@FXML
 	private void getAnAnswer(ActionEvent event) {
 		if(event.getSource() == yes) {
@@ -34,7 +34,7 @@ public class ConfirmBox {
 	 * We must return an answer */
 	public boolean displayM() {
 		Stage confirmStage = new Stage();
-		// Settings for stage
+		/* Settings for stage */
 		try {			
 			Parent root = (Parent) FXMLLoader.load(ConfirmBox.class.getClass().getResource("/messages/ConfirmBox.fxml"));			
 			Scene scene = new Scene(root);	
@@ -46,12 +46,12 @@ public class ConfirmBox {
 		confirmStage.setTitle("DreamReading");			
 		confirmStage.initModality(Modality.APPLICATION_MODAL);
 		confirmStage.setResizable(false);
-		// In case we don't want to close
+		/* In case we don't want to close */
 		confirmStage.setOnCloseRequest(e -> {
 			answer = false;
 			confirmStage.close();
 		});		
-		// Showing stage
+		/* Showing stage */
 		confirmStage.showAndWait();
 		
 		return answer;

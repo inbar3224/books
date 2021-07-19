@@ -30,7 +30,7 @@ public class MainScreenController implements Initializable {
 		
 		if(start != null) {
 			Stage homeScreenWindow = DreamReading.getPrimaryStage();
-			// Settings for stage
+			/* Settings for stage */
 			try {				
 				Parent homeScreenParent = FXMLLoader.load(getClass().getResource("/homeScreen/HomeScreen.fxml"));				
 				Scene homeScreenScene = new Scene(homeScreenParent);
@@ -39,12 +39,12 @@ public class MainScreenController implements Initializable {
 			catch (Exception exception) {
 				exception.printStackTrace();
 			}
-			// Showing stage
+			/* Showing stage */
 			homeScreenWindow.show();
 		}		
 	}
 
-	// We have to confirm we indeed wanted to close the application 
+	/* We have to confirm we indeed wanted to close the application */ 
 	public void confirmClose(Stage primaryStage) {
 		ConfirmBox confirmClose = new ConfirmBox();
 		boolean result = confirmClose.displayM();
@@ -53,6 +53,7 @@ public class MainScreenController implements Initializable {
 		}
 	}
 	
+	/*Initialize all data for the screen */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		Stage window = DreamReading.getPrimaryStage();
@@ -60,7 +61,7 @@ public class MainScreenController implements Initializable {
 		window.setTitle("DreamReading");
 		preview.getStyleClass().add("textArea");
 		preview.setEditable(false);
-		// Before the stage closes, we have to wait and confirm the closing request
+		/* Before the stage closes, we have to wait and confirm the closing request */
 		window.setOnCloseRequest(e -> {
 			e.consume();
 			confirmClose(window);

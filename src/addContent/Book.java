@@ -7,6 +7,7 @@ public class Book {
 	
 	private String name, author, seriesStandAlone, index, publicationDate;
 	
+	/* Constructor */
 	public Book(String firstC, String secondC, String thirdC, String fourth, String fifth) {
 		name = firstC;
 		author = secondC;
@@ -15,7 +16,7 @@ public class Book {
 		publicationDate = fifth;
 	}
 	
-	// When we add the books to the TableView, we need to get the data somehow...
+	/* When we add the books to the TableView, we need to get the data somehow... */
 	public String getAuthor() {
 		return author;
 	}
@@ -36,7 +37,7 @@ public class Book {
 		return publicationDate;
 	}
 	
-	// Specific format of publication date for the "Published" column	
+	/* Specific format of publication date for the "Published" column */	
 	public String getPublicationDate() {
 		if(publicationDate.compareTo("") == 0) {
 			return "No";
@@ -86,29 +87,6 @@ public class Book {
 		else if (!author.equals(other.author)) {
 			return false;
 		}			
-		
-		/*if (index == null) {
-			if (other.index != null) {
-				return false;
-			}				
-		} else if (!index.equals(other.index)) {
-			return false;
-		}			
-		
-		if (publicationDate == null) {
-			if (other.publicationDate != null) {
-				return false;
-			}				
-		} else if (!publicationDate.equals(other.publicationDate)) {
-			return false;
-		}			
-		if (seriesStandAlone == null) {
-			if (other.seriesStandAlone != null) {
-				return false;
-			}				
-		} else if (!seriesStandAlone.equals(other.seriesStandAlone)) {
-			return false;
-		}*/
 			
 		return true;
 	}

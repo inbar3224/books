@@ -20,7 +20,7 @@ public class HttpRequest {
 	private SearchOutcomeListener listener;
 	private ObservableList<Book> results;
 	
-	// Set listener	
+	/* Set listener */	
 	public void setSearchOutcomeListener(SearchOutcomeListener listener) {
 		this.listener = listener;
 	}
@@ -28,8 +28,8 @@ public class HttpRequest {
 	/* Parse input
 	 * Create a connection according to a specific url
 	 * Call method to convert response to JSON
-	 * We check if we have even have results or not
-	 * If we do, we call a method to separate each book and it's details to it's own place in the array
+	 * We check if we even have results or not
+	 * If we do, we call a method to separate each book and it's details to it's own place in the list
 	 * We also have a listener from the SearchScreen who gets a request status after we're done working */
 	public void request(String input, int searchType) {
 		int requestStatus = 0;
@@ -40,14 +40,14 @@ public class HttpRequest {
 		String beginning = "https://www.goodreads.com/search/index.xml?key=" + API_KEY + "&q=";
 		String fullNameAddition = "&search_type=books&search[field]=title";
 		
-		// Creating customized input for the HTTP request
+		/* Creating customized input for the HTTP request */
 		String searchString = parseInput(input);
 		searchString = beginning + searchString;		
 		if(searchType == 1) {
 			searchString += fullNameAddition;
 		}
 		
-		// HTTP request		
+		/* HTTP request */		
 		try {
 			URL url = new URL(searchString); 
 			
@@ -60,29 +60,28 @@ public class HttpRequest {
 			reader.close();						
 		}
 		catch(IOException e) {
-			// No Internet
+			/* No Internet */
 			requestStatus = 0;
 			if(listener != null) {
 				listener.onEvent(requestStatus, results);
 				return;
 			}
-			// e.printStackTrace();
 		}
 		
-		// We have to close the request
+		/* We have to close the request */
 		finally {
 			connection.disconnect();			
 		}	
 		
-		// Check if we have results
+		/* Check if we have results */
 		boolean isThereResults = responseContent.toString().matches(".*\\bwork\\b.*");
-		// We have at least one result
+		/* We have at least one result */
 		if(isThereResults) {
 			xmlToJson(responseContent.toString());				
 			resultsAnalysis(finalResponse);
 			requestStatus = 2;
 		}
-		// No results - either we have spelling errors or the book just doesn't exist
+		/* No results - either we have spelling errors or the book just doesn't exist */
 		else {
 			requestStatus = 1;				
 		}		
@@ -110,19 +109,19 @@ public class HttpRequest {
 	/* Do we only have one book as a result or more?
 	 * One book has a different XML file than 2 or more books
 	 * In order for the resultsAnalysis method to have one set of tools regardless of the amount,
-	 * We design the finalRequest string according to the number of books */
+	 * We design the finalResponse string according to the number of books */
 	public void xmlToJson(String response) {
 		JSONObject object = XML.toJSONObject(response);
 		
 		int isAlone = object.toString().indexOf("[");
-		// A single book
+		/* A single book */
 		if(isAlone == -1) {
 			finalResponse = extraction(object.toString(), "work", 1);
 			finalResponse = extraction(finalResponse, "}}},", 0);
 			finalResponse = finalResponse.replaceFirst("\":", "[");
 			finalResponse += "}}]";
 		}
-		// 2 - 20 books (20 is the maximum number of books we can get in a single request)
+		/* 2 - 20 books (20 is the maximum number of books we can get in a single request) */
 		else {
 			finalResponse = extraction(object.toString(), "\\[", 1);
 			finalResponse = extraction(finalResponse, "\\]", 0);
@@ -132,35 +131,34 @@ public class HttpRequest {
 	
 	/* Separate each book from the initial response
 	 * Getting specific details: name, author's name, series / stand-alone, index, release date
-	 * We arrange each book and it's details in an array to be presented later in the results screen */
+	 * We arrange each book and it's details in an list to be presented later in the results screen */
 	public void resultsAnalysis(String responseBody) {
 		String title = "";
 		String author = "";
 		String series = "", index = ""; 
 		String publicationDate = "";
 						
-		JSONArray listOfBooks = new JSONArray(responseBody);
-		
+		JSONArray listOfBooks = new JSONArray(responseBody);		
 		results = FXCollections.observableArrayList();
 				
 		for(int i = 0; i < listOfBooks.length(); i++) {
 			JSONObject singleBook = listOfBooks.getJSONObject(i); // a single object
 			JSONObject bestBook = singleBook.getJSONObject("best_book");
 			
-			// Book's name
+			/* Book's name */
 			title = getName(bestBook);
-			// Author's name
+			/* Author's name */
 			author = getAuthor(bestBook);
-			// Series / Stand-alone
+			/* Series / Stand-alone */
 			series = getSeries(bestBook);
-			// Index / zero
+			/* Index / zero (empty) */
 			if(series.compareTo("Standalone") == 0) {
 				index = "";
 			}
 			else {
 				index = getIndex(bestBook);
 			}			
-			// Full publication date
+			/* Full publication date */
 			publicationDate = getDate(singleBook);
 			
 			Book option = new Book(title, author, series, index, publicationDate);
@@ -168,13 +166,13 @@ public class HttpRequest {
 		}		
 	}
 	
-	// Get book's name
+	/* Get book's name */
 	public String getName(JSONObject partialData) {
 		String title = "";	
 		String tempTitle = partialData.getString("title");
 		
 		int isSeries = tempTitle.indexOf("(");
-		// Book is part of a series - contains '('
+		/* Book is part of a series - contains '(' */
 		if(isSeries != -1) {
 			title = extraction(tempTitle, "\\(", 0);
 			char last = title.charAt(title.length() - 1);
@@ -182,7 +180,7 @@ public class HttpRequest {
 				title = title.replaceAll(" $","");
 			}
 		}
-		// Book isn't a part of a series
+		/* Book isn't a part of a series */
 		else {
 			title = tempTitle;
 		}
@@ -190,20 +188,20 @@ public class HttpRequest {
 		return title;
 	}
 	
-	// Get author's name
+	/* Get author's name */ 
 	public String getAuthor(JSONObject partialData) {
 		JSONObject tempAuthor = partialData.getJSONObject("author");
 		String author = tempAuthor.getString("name");
 		return author;
 	}
 	
-	// Get series / stand-alone
+	/* Get series / stand-alone */
 	public String getSeries(JSONObject partialData) {
 		String series = "";
 		String tempSeries = partialData.getString("title");
 		
 		int isSeries = tempSeries.indexOf("(");		
-		// Series
+		/* Series */ 
 		if(isSeries != -1) {
 			series = extraction(tempSeries, "\\(", 1);
 			int hasChar = series.indexOf(",");
@@ -222,7 +220,7 @@ public class HttpRequest {
 				series = "Standalone";
 			}
 		}
-		// Stand-alone
+		/* Stand-alone */ 
 		else {
 			series = "Standalone";
 		}
@@ -230,7 +228,7 @@ public class HttpRequest {
 		return series;
 	}
 	
-	// Get index / zero
+	/* Get index / zero (empty) */ 
 	public String getIndex(JSONObject partialData) {
 		String index = "";
 		
@@ -244,14 +242,14 @@ public class HttpRequest {
 		return index;		
 	}	
 	
-	// Get book's publication date
+	/* Get book's publication date */ 
 	public String getDate(JSONObject partialDate) {
 		JSONObject temp;
 		int num;
 		String date = "";
 		boolean dateExist;
 		
-		// Do we have a year?
+		/* Do we have a year? */
 		temp = partialDate.getJSONObject("original_publication_year");
 		dateExist = temp.has("content");
 		if(dateExist) {
@@ -262,7 +260,7 @@ public class HttpRequest {
 			date = "";
 			return date;
 		}
-		// Do we have a month?
+		/* Do we have a month? */
 		temp = partialDate.getJSONObject("original_publication_month");
 		dateExist = temp.has("content");
 		if(dateExist) {
@@ -276,7 +274,7 @@ public class HttpRequest {
 			date = "";
 			return date;
 		}
-		// Do we have a day?
+		/* Do we have a day? */ 
 		temp = partialDate.getJSONObject("original_publication_day");
 		dateExist = temp.has("content");
 		if(dateExist) {
@@ -294,7 +292,7 @@ public class HttpRequest {
 		return date;
 	}
 		
-	// We split the string into 2 parts and taking the necessary part according to given index
+	/* We split the string into 2 parts and take the necessary part according to the given index */
 	public String extraction(String original, String limit, int index) {
 		String[] split = original.split(limit, 2);
 		return split[index].toString();

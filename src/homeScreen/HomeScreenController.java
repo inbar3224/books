@@ -22,10 +22,11 @@ public class HomeScreenController implements Initializable {
 	@FXML private Button goBack;
 	@FXML private TextArea preview;
 	
+	/* Go to Search screen */
 	@FXML
 	private void search(ActionEvent event) {
 		Stage searchScreenWindow = DreamReading.getPrimaryStage();
-		// Settings for stage
+		/* Settings for stage */
 		try {			
 			Parent searchScreenParent = FXMLLoader.load(getClass().getResource("/addContent/SearchScreen.fxml"));				
 			Scene searchScreenScene = new Scene(searchScreenParent);
@@ -34,14 +35,15 @@ public class HomeScreenController implements Initializable {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		// Showing stage
+		/* Showing stage */
 		searchScreenWindow.show();
 	}
 	
+	/* Go to Library screen */
 	@FXML
 	private void library(ActionEvent event) {
 		Stage libraryScreenWindow = DreamReading.getPrimaryStage();
-		// Settings for stage
+		/* Settings for stage */
 		try {
 			Parent libraryScreenParent = FXMLLoader.load(getClass().getResource("/myLibrary/MyLibraryScreen.fxml"));
 			Scene libraryScreenScene = new Scene(libraryScreenParent);
@@ -50,14 +52,15 @@ public class HomeScreenController implements Initializable {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		// Showing stage
+		/* Showing stage */
 		libraryScreenWindow.show();
 	}
 	
+	/* Go to Calendar screen */
 	@FXML
 	private void Calendar(ActionEvent event) {
 		Stage calendarScreenWindow = DreamReading.getPrimaryStage();
-		// Settings for stage
+		/* Settings for stage */
 		try {
 			Parent calendarScreenParent = FXMLLoader.load(getClass().getResource("/calendar/CalendarScreen.fxml"));
 			Scene calendarScreenScene = new Scene(calendarScreenParent);
@@ -66,15 +69,15 @@ public class HomeScreenController implements Initializable {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		// Showing stage
+		/* Showing stage */
 		calendarScreenWindow.show();
 	}
 	
-	// Returns to main screen
+	/* Return to Main screen */
 	@FXML
 	private void goBack(ActionEvent event) {
 		Stage mainScreenWindow = DreamReading.getPrimaryStage();
-		// Settings for stage
+		/* Settings for stage */
 		try {			
 			Parent mainScreenParent = FXMLLoader.load(getClass().getResource("/mainScreen/MainScreen.fxml"));				
 			Scene mainScreenScene = new Scene(mainScreenParent);
@@ -83,13 +86,14 @@ public class HomeScreenController implements Initializable {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		// Showing stage
+		/* Showing stage */
 		mainScreenWindow.show();
 	}
 	
+	/* Initialize all data for the screen */ 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		// Settings for the screen
+		/* Settings for the screen */
 		preview.getStyleClass().add("textArea");
 		preview.setText(ConstantStrings.generalText);
 		preview.setEditable(false);

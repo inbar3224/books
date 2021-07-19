@@ -48,32 +48,33 @@ public class MyLibraryController implements Initializable {
 	@FXML private Button deleteBook;
 	@FXML private Button goBack;
 	
+	/* Trying to delete a book from the library */
 	@FXML
 	private void deleteBook(ActionEvent event) {
 		AlertBox message = new AlertBox();
 		Book chosen = tableView.getSelectionModel().getSelectedItem();
-		// We chose a book
+		/* We chose a book */
 		if(chosen != null) {
-			// The book is a stand-alone - we could just remove it
+			/* The book is a stand-alone - we could just remove it */
 			if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
 				delete(chosen);				
 				adjustments();
 				message.displayM("/messages/BookWasDeleted.fxml");
 			}
-			// The book is part of a series - should we remove just this book or the whole series?
+			/* The book is part of a series - should we remove just this book or the whole series? */
 			else {
 				SingleOrAllOutcomeListener listener = new SingleOrAllOutcomeListener() {					
 					@Override
 					public void decision(int status, boolean answer) {
 						if(status == 1) {
 							if(answer == true) {
-								// remove a single book
+								/* remove a single book */
 								delete(chosen);
 								adjustments();
 								message.displayM("/messages/BookWasDeleted.fxml");
 							}
 							else {
-								// remove the whole series
+								/* remove the whole series */
 								deleteAll(chosen.getSeriesStandAlone());
 								message.displayM("/messages/SeriesWasDeleted.fxml");
 							}	
@@ -85,38 +86,40 @@ public class MyLibraryController implements Initializable {
 				removeSingleOrAll.displayQuestion();
 			}
 		}
-		// No book was chosen
+		/* No book was chosen */
 		else {
 			message.displayM("/messages/NoBookChosen.fxml");
 		}		
 	}
 	
+	/* Trying to delete a series from the library */
 	@FXML
 	private void deleteSeries(ActionEvent event) {
 		AlertBox message = new AlertBox();
 		Book chosen = tableView.getSelectionModel().getSelectedItem();
-		// We chose a series of books
+		/* We chose a series of books */
 		if(chosen != null) {
-			// The book is a stand-alone - has to be removed by the right button
+			/* The book is a stand-alone - has to be removed by the right button */ 
 			if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
 				message.displayM("/messages/RemoveSingleNotSeries.fxml");
 			}
-			// remove the whole series
+			/* remove the whole series */
 			else {				
 				deleteAll(chosen.getSeriesStandAlone());
 				message.displayM("/messages/SeriesWasDeleted.fxml");
 			}
 		}
-		// Nothing was chosen
+		/* Nothing was chosen */
 		else {
 			message.displayM("/messages/NoBookChosen.fxml");
 		}
 	}
 	
+	/* Return to home screen */
 	@FXML
 	private void goBack(ActionEvent event) {
 		Stage homeScreenWindow = DreamReading.getPrimaryStage();		
-		// Settings for stage
+		/* Settings for stage */
 		try {			
 			Parent homeScreenParent = FXMLLoader.load(getClass().getResource("/homeScreen/HomeScreen.fxml"));				
 			Scene homeScreenScene = new Scene(homeScreenParent);
@@ -125,10 +128,11 @@ public class MyLibraryController implements Initializable {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		// Showing stage
+		/* Showing stage */ 
 		homeScreenWindow.show();
 	}
 	
+	/* Delete item from the database-based library */
 	public void delete(Book wanted) {
 		DBConnection temp = new DBConnection();
 		Connection connection = temp.connect();
@@ -136,7 +140,7 @@ public class MyLibraryController implements Initializable {
 		if(connection != null) {
 			PreparedStatement pStatement = null;
 			String sql = "DELETE FROM books WHERE Name = ? AND Author = ?";
-			// Setting parameters
+			/* Setting parameters */
 			try {				
 				pStatement = connection.prepareStatement(sql);
 				pStatement.setString(1, wanted.getName());
@@ -164,6 +168,7 @@ public class MyLibraryController implements Initializable {
 		}				
 	}
 	
+	/* Delete a whole series of books */
 	public void deleteAll(String input) {
 		ObservableList<Book> deleteArray = FXCollections.observableArrayList();
 		for(Book book : library) {
@@ -179,9 +184,11 @@ public class MyLibraryController implements Initializable {
 		reloadScreen();
 	}
 	
+	/* When we delete a series, a lot of items disappear from the screen all at once
+	 * Instead of changing the tableView one row at a time, it's best to just reload the screen */
 	public void reloadScreen() {
 		Stage libraryScreenWindow = DreamReading.getPrimaryStage();
-		// Settings for stage
+		/* Settings for stage */
 		try {
 			Parent libraryScreenParent = FXMLLoader.load(getClass().getResource("/myLibrary/MyLibraryScreen.fxml"));
 			Scene libraryScreenScene = new Scene(libraryScreenParent);
@@ -190,10 +197,11 @@ public class MyLibraryController implements Initializable {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		// Showing stage
+		/* Showing stage */
 		libraryScreenWindow.show();
 	}
 	
+	/* Read the entire library from the database so we could present it on screen */
 	public void readAll() {
 		library = FXCollections.observableArrayList();
 		DBConnection temp = new DBConnection();
@@ -239,23 +247,27 @@ public class MyLibraryController implements Initializable {
 		}
 	}
 	
+	/* Change number of books on the screen after every delete */
 	public void setNumberOfBooks(int number) {
 		String numberToString = Integer.toString(number) + " books";
 		numberOfBooks.setText(numberToString);
 	}
 	
+	/* Make necessary adjustment on the screen after deleting a single book */
 	public void adjustments() {
 		tableView.getSelectionModel().clearSelection();
-		setNumberOfBooks(number - 1);
+		number--;
+		setNumberOfBooks(number);
 	}
-
+	
+	/* Initialize all data for the screen */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		// getting data from the database
+		/* Getting data from the database */
 		readAll();
 		setNumberOfBooks(number);
 		
-		// setting data in the tableView
+		/* Setting data in the tableView */
 		name.setCellValueFactory(new PropertyValueFactory<>("name"));
 		name.getStyleClass().add("textArea");
 		author.setCellValueFactory(new PropertyValueFactory<>("author"));
@@ -268,15 +280,15 @@ public class MyLibraryController implements Initializable {
 		published.getStyleClass().add("textArea");
 		tableView.setItems(library);
 		
-		// filter results through search
+		/* Filter results through search */
 		FilteredList<Book> filteredData = new FilteredList<>(library, b -> true);
 		keyWord.textProperty().addListener((observable, oldValue, newValue) -> {
 			filteredData.setPredicate(book -> {
-				// if keyWord is empty, display all books
+				/* If keyWord is empty, display all books */
 				if(newValue == null || newValue.isEmpty()) {
 					return true;
 				}
-				// compare by lower case letters
+				/* compare by lower case letters */
 				String lowerCaseFilter = newValue.toLowerCase();
 				if(book.getName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true;
@@ -299,11 +311,11 @@ public class MyLibraryController implements Initializable {
 			});
 		});
 		
-		// "Convert" the filtered list in a sorted list. 
+		/* "Convert" the filtered list in a sorted list.
+		 * Bind it's comparator to the table view comparator - so we'll be able to sort the sorted list by column
+		 * Add sorted (and filtered) data to the table. */
 		SortedList<Book> sortedData = new SortedList<>(filteredData);
-		// bind it's comparator to the table view comparator - so we'll be able to sort the sorted list by column
 		sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-		// Add sorted (and filtered) data to the table.
 		tableView.setItems(sortedData);		
 	}
 }

@@ -26,7 +26,7 @@ import mainScreen.DreamReading;
 import messages.AlertBox;
 import messages.SingleOrAllController;
 
-// Note to self - we didn't set controller in the fxml file because we set it in the SearchScreenController class
+/* Note to self - we didn't set controller in the fxml file because we set it in the SearchScreenController class */
 
 public class ResultsScreenController implements Initializable {
 	
@@ -45,36 +45,37 @@ public class ResultsScreenController implements Initializable {
 	@FXML private Button addBook;
 	@FXML private Button goBack;
 	
+	/* Trying to add a book to the database-based library */
 	@FXML
 	private void addBook(ActionEvent event) {
 		AlertBox message = new AlertBox();
 		Book chosen = tableView.getSelectionModel().getSelectedItem();
-		// We chose a book
+		/* We chose a book */
 		if(chosen != null) {
 			readAll();
 			boolean exist = alreadyExist.contains(chosen);
-			// The book doesn't exists in our library
+			/* The book doesn't exists in our library */
 			if(exist == false) {
-				// The book is a stand-alone - we could just add it
+				/* The book is a stand-alone - we could just add it */
 				if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
 					insert(chosen.getName(), chosen.getAuthor(), chosen.getSeriesStandAlone(),
 							chosen.getIndex(), chosen.myPublicationDate());
 					message.displayM("/messages/InsertedBook.fxml");
 				}
-				// The book is part of a series - should we add just this book or the whole series?
+				/* The book is part of a series - should we add just this book or the whole series? */
 				else {
 					SingleOrAllOutcomeListener listener = new SingleOrAllOutcomeListener() {						
 						@Override
 						public void decision(int status, boolean answer) {
 							if(status == 1) {
 								if(answer == true) {
-									// Add as a single book
+									/* Add as a single book */
 									insert(chosen.getName(), chosen.getAuthor(), chosen.getSeriesStandAlone(),
 											chosen.getIndex(), chosen.myPublicationDate());
 									message.displayM("/messages/InsertedBook.fxml");
 								}
 								else {
-									// Add the whole series
+									/* Add the whole series */
 									insertAll(chosen.getSeriesStandAlone());
 									message.displayM("/messages/InsertedSeries.fxml");
 								}	
@@ -86,43 +87,45 @@ public class ResultsScreenController implements Initializable {
 					singleOrAll.displayQuestion();									
 				}				
 			}
-			// The book already exists in our library
+			/* The book already exists in our library */
 			else {
 				message.displayM("/messages/BookExists.fxml");
 			} 
 		}
-		// No book was chosen
+		/* No book was chosen */
 		else {
 			message.displayM("/messages/NoBookChosen.fxml");
 		}			
 	}
 	
+	/* Trying to add a series to the database-based library */
 	@FXML 
 	private void addSeries(ActionEvent event) {
 		AlertBox message = new AlertBox();
 		Book chosen = tableView.getSelectionModel().getSelectedItem();
-		// We chose a series of books
+		/* We chose a series of books */
 		if(chosen != null) {
-			// The book is a stand-alone - has to be added by the right button
+			/* The book is a stand-alone - has to be added by the right button */
 			if(chosen.getSeriesStandAlone().compareTo("Standalone") == 0) {
 				message.displayM("/messages/SingleNotSeries.fxml");
 			}
-			// Add the whole series
+			/* Add the whole series */ 
 			else {				
 				insertAll(chosen.getSeriesStandAlone());
 				message.displayM("/messages/InsertedSeries.fxml");
 			}
 		}
-		// Nothing was chosen
+		/* Nothing was chosen */ 
 		else {
 			message.displayM("/messages/NoBookChosen.fxml");
 		}			
 	}
 	
+	/* Return to our search screen */
 	@FXML
 	private void goBack(ActionEvent event) {
 		Stage searchScreenWindow = DreamReading.getPrimaryStage();
-		// Settings for stage
+		/* Settings for stage */
 		try {			
 			Parent searchScreenParent = FXMLLoader.load(getClass().getResource("/addContent/SearchScreen.fxml"));				
 			Scene searchScreenScene = new Scene(searchScreenParent);
@@ -131,10 +134,11 @@ public class ResultsScreenController implements Initializable {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		// Showing stage
+		/* Showing stage */
 		searchScreenWindow.show();
 	}
 	
+	/* Constructor */
 	public ResultsScreenController(String searchWord, ObservableList<Book> resultsArray) {
 		super();
 		this.searchWord = searchWord;
@@ -155,7 +159,7 @@ public class ResultsScreenController implements Initializable {
 			try {				
 				pStatement = connection.prepareStatement(sql);
 				rSet = pStatement.executeQuery();
-				// while we still can - create a book instance and add it to our list
+				/* While we still can - create a book instance and add it to our list */
 				while(rSet.next()) {
 					Book item = new Book(rSet.getString("Name"), rSet.getString("Author"), 
 							rSet.getString("SeriesOrStandAlone"), rSet.getString("Number"),rSet.getString("PublicationDate"));
@@ -197,7 +201,7 @@ public class ResultsScreenController implements Initializable {
 		if(connection != null) {
 			PreparedStatement pStatement = null;
 			String sql = "INSERT INTO books(Name, Author, SeriesOrStandAlone, Number, PublicationDate) VALUES(?,?,?,?,?)";
-			// Setting parameters
+			/* Setting parameters */ 
 			try {				
 				pStatement = connection.prepareStatement(sql);
 				pStatement.setString(1, name);
@@ -227,18 +231,19 @@ public class ResultsScreenController implements Initializable {
 		}			
 	}
 	
-	// Insert entire series
+	/* Insert the entire series */
 	public void insertAll(String input) {
 		HttpRequest httpRequest = new HttpRequest();		
 		SearchOutcomeListener listener = new SearchOutcomeListener() {			
 			@Override
 			public void onEvent(int status, ObservableList<Book> resultsArray) {
-				// No Internet
+				/* No Internet */ 
 				if(status == 0) {
 					AlertBox noInternet = new AlertBox();
 					noInternet.displayM("/messages/NoInternet.fxml");
 				}
 				else if(status == 2) {
+					readAll();
 					boolean exist;
 					for(Book book : resultsArray) {
 						if(input.compareTo(book.getSeriesStandAlone()) == 0) {
@@ -256,6 +261,7 @@ public class ResultsScreenController implements Initializable {
 		httpRequest.request(input, 1);
 	}
 	
+	/* Initialize screen with all of it's data */ 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		keyWord.getStyleClass().add("textArea");

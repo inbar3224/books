@@ -20,7 +20,7 @@ public class SingleOrAllController {
 	@FXML private Button single;
 	@FXML private Button all;
 		
-	// Choose how to add the item
+	/* Choose how to add the item */
 	@FXML
 	private void getAnAnswer(ActionEvent event) {
 		if(event.getSource() == single) {
@@ -35,7 +35,7 @@ public class SingleOrAllController {
 		QuestionScreenWindow.close();
 	}
 	
-	// set listener
+	/* set listener */
 	public void setSingleOrAllOutcomeListener(SingleOrAllOutcomeListener listener) {
 		this.listener = listener;
 	}
@@ -44,7 +44,7 @@ public class SingleOrAllController {
 	 * We must return an answer */
 	public void displayQuestion() {
 		Stage questionStage = new Stage();
-		// Settings for stage
+		/* Settings for stage */
 		try {			
 			Parent root = (Parent) FXMLLoader.load(ConfirmBox.class.getClass().getResource("/messages/SingleOrAll.fxml"));			
 			Scene scene = new Scene(root);	
@@ -56,13 +56,13 @@ public class SingleOrAllController {
 		questionStage.setTitle("DreamReading");			
 		questionStage.initModality(Modality.APPLICATION_MODAL);
 		questionStage.setResizable(false);
-		// In case we don't want to add anything
+		/* In case we don't want to add anything */
 		questionStage.setOnCloseRequest(e -> {
 			status = 2;
 			listener.decision(status, answer);
 			questionStage.close();
 		});		
-		// Showing stage
+		/* Showing stage */
 		questionStage.showAndWait();
 		listener.decision(status, answer);
 	}	

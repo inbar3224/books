@@ -20,7 +20,7 @@ public class RemoveSingleOrAllController {
 	@FXML private Button single;
 	@FXML private Button all;
 		
-	// Choose how to add the item
+	/* Choose how to remove the item */
 	@FXML
 	private void getAnAnswer(ActionEvent event) {
 		if(event.getSource() == single) {
@@ -35,16 +35,16 @@ public class RemoveSingleOrAllController {
 		QuestionScreenWindow.close();
 	}
 	
-	// set listener
+	/* set listener */
 	public void setSingleOrAllOutcomeListener(SingleOrAllOutcomeListener listener) {
 		this.listener = listener;
 	}
 	
-	/* The caller asks us whether we want to add a single book or a whole series 
+	/* The caller asks us whether we want to remove a single book or a whole series 
 	 * We must return an answer */
 	public void displayQuestion() {
 		Stage questionOfRemovalStage = new Stage();
-		// Settings for stage
+		/* Settings for stage */
 		try {			
 			Parent root = (Parent) FXMLLoader.load(ConfirmBox.class.getClass().getResource("/messages/RemoveSingleOrAll.fxml"));			
 			Scene scene = new Scene(root);	
@@ -56,13 +56,13 @@ public class RemoveSingleOrAllController {
 		questionOfRemovalStage.setTitle("DreamReading");			
 		questionOfRemovalStage.initModality(Modality.APPLICATION_MODAL);
 		questionOfRemovalStage.setResizable(false);
-		// In case we don't want to add anything
+		/* In case we don't want to remove anything */
 		questionOfRemovalStage.setOnCloseRequest(e -> {
 			status = 2;
 			listener.decision(status, answer);
 			questionOfRemovalStage.close();
 		});		
-		// Showing stage
+		/* Showing stage */
 		questionOfRemovalStage.showAndWait();
 		listener.decision(status, answer);
 	}	

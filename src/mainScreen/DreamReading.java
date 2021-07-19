@@ -10,16 +10,16 @@ public class DreamReading extends Application {
 	
 	private static Stage realStage;
 	
-	// Launching the java desktop application
+	/* Launching application */
 	public static void main(String[] args) {
 		launch(args); 
 	}
 	
-	// Showing main screen (primary stage)
+	/* Showing Main screen (primary stage) */
 	@Override
 	public void start(Stage primaryStage) {
 		setPrimaryStage(primaryStage);
-		// Settings for stage
+		/* Settings for stage */
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));			
 			Scene scene = new Scene(root);
@@ -28,7 +28,7 @@ public class DreamReading extends Application {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		// Showing stage
+		/* Showing stage */
 		realStage.show();
 	}
 	
@@ -38,7 +38,7 @@ public class DreamReading extends Application {
         return realStage;
     }
 	
-	// Set temporary stage to be our real stage
+	/* Set temporary stage to be our real stage */
     private void setPrimaryStage(Stage primaryStage) {
         realStage = primaryStage;
     }	

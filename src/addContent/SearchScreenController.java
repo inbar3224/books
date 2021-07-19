@@ -35,23 +35,23 @@ public class SearchScreenController implements Initializable {
 		SearchOutcomeListener listener = new SearchOutcomeListener() {			
 			@Override
 			public void onEvent(int status, ObservableList<Book> resultsArray) {
-				// No Internet
+				/* No Internet */
 				if(status == 0) {
 					AlertBox noInternet = new AlertBox();
 					noInternet.displayM("/messages/NoInternet.fxml");
 				}
-				// No results
+				/* No results */
 				else if(status == 1) {
 					AlertBox noResults = new AlertBox();
 					noResults.displayM("/messages/NoResults.fxml");
 				}
-				// results
+				/* results */
 				else if(status == 2) {
 					Stage resultsScreenWindow = DreamReading.getPrimaryStage();	
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("/addContent/ResultsScreen.fxml"));						
 					ResultsScreenController controller = new ResultsScreenController(input, resultsArray);
 					loader.setController(controller);
-					// Settings for stage
+					/* Settings for stage */ 
 					try {												
 						Parent resultsScreenParent = loader.load();						
 						Scene resultsScreenScene = new Scene(resultsScreenParent);
@@ -60,7 +60,7 @@ public class SearchScreenController implements Initializable {
 					catch (Exception exception) {
 						exception.printStackTrace();
 					}
-					// Showing stage
+					/* Showing stage */ 
 					resultsScreenWindow.show();
 				}		
 			}
@@ -75,11 +75,11 @@ public class SearchScreenController implements Initializable {
 		}		
 	}
 	
-	// Returns to home screen
+	/* Returns to home screen */
 	@FXML
 	private void goBack(ActionEvent event) {
 		Stage homeScreenWindow = DreamReading.getPrimaryStage();		
-		// Settings for stage
+		/* Settings for stage */
 		try {			
 			Parent homeScreenParent = FXMLLoader.load(getClass().getResource("/homeScreen/HomeScreen.fxml"));				
 			Scene homeScreenScene = new Scene(homeScreenParent);
@@ -88,7 +88,7 @@ public class SearchScreenController implements Initializable {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		// Showing stage
+		/* Showing stage */ 
 		homeScreenWindow.show();
 	}
 	

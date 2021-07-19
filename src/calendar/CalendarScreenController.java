@@ -52,10 +52,11 @@ public class CalendarScreenController implements Initializable {
 	@FXML private TableColumn<Book, String> index2;
 	@FXML Button goBack;
 	
+	/* Return to home screen */
 	@FXML
 	private void goBack(ActionEvent event) {
 		Stage homeScreenWindow = DreamReading.getPrimaryStage();		
-		// Settings for stage
+		/* Settings for stage */ 
 		try {			
 			Parent homeScreenParent = FXMLLoader.load(getClass().getResource("/homeScreen/HomeScreen.fxml"));				
 			Scene homeScreenScene = new Scene(homeScreenParent);
@@ -64,10 +65,12 @@ public class CalendarScreenController implements Initializable {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		// Showing stage
+		/* Showing stage */ 
 		homeScreenWindow.show();
 	}
 	
+	/* Read the entire existing library so we could have books' publication dates 
+	 * In the case of failed connection or failed reading attempt - you'll be notified */
 	public void readAll() {
 		library = FXCollections.observableArrayList();
 		DBConnection temp = new DBConnection();
@@ -112,12 +115,15 @@ public class CalendarScreenController implements Initializable {
 		}
 	}
 	
+	/* When we press a date at the calendar
+	 * We get a list of books that are being published on that date */
 	public void getPressedDate(ActionEvent event) {
 		LocalDate date = calendar.getValue();
 		checkForBooks(date, 0, specificDate);
 		setTableView();
 	}
 	
+	/* Find the books that have the same publication dates as the given one */
 	public void checkForBooks(LocalDate date, int range, ObservableList<Book> miniLibrary) {
 		LocalDate limit = date.plusDays(range);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -137,6 +143,7 @@ public class CalendarScreenController implements Initializable {
 		}		
 	}
 	
+	/* initialize values for the second table view */
 	public void setTableView() {
 		// setting data in the tableView
 		name2.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -150,6 +157,7 @@ public class CalendarScreenController implements Initializable {
 		booksByDate.setItems(specificDate);
 	}
 	
+	/* Paint all publication dates on the calendar so we wouldn't have to work so hare to find them */
 	public void initializeCalendar(LocalDate today) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		List<LocalDate> dates = new ArrayList<LocalDate>();
@@ -182,6 +190,7 @@ public class CalendarScreenController implements Initializable {
 		});
 	}
 	
+	/* Initialize all data for the screen */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		readAll();
